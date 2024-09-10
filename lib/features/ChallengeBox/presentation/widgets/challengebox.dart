@@ -2,14 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class ChallengeBox extends StatelessWidget {
+  const ChallengeBox({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hello'),
+        title: const Text('Hello'),
       ),
       // drawer: Drawer(
       //   child: ListView(

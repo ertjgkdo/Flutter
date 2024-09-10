@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:newproject/whole%20screen/podcast_model.dart';
+import 'package:newproject/features/podcastScreen/domain/podcast_model.dart';
 
 class NewScreen extends StatelessWidget {
   const NewScreen({

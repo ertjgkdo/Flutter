@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newproject/screens.dart';
-import 'package:newproject/whole%20screen/newscreen.dart';
+import 'package:newproject/features/mainScreen/presentation/widgets/screens.dart';
 
 void main() {
   runApp(const MyFirstApp());

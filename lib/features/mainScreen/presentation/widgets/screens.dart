@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:newproject/columns.dart';
-import 'package:newproject/features/home/home.dart';
-import 'package:newproject/features/home/task.dart';
-import 'package:newproject/generators.dart';
-import 'package:newproject/whole%20screen/newScreen.dart';
-import 'package:newproject/whole%20screen/podcast_model.dart';
+import 'package:newproject/features/rowColumns/presentation/widgets/columns.dart';
+import 'package:newproject/features/ChallengeBox/presentation/widgets/challengebox.dart';
+import 'package:newproject/features/ChallengeBox/presentation/widgets/task.dart';
+import 'package:newproject/features/podcastScreen/presentation/widgets/podcastPage.dart';
+import 'package:newproject/features/podcastScreen/domain/podcast_model.dart';
+import 'package:newproject/features/generatorScreen/presentation/widget/generators.dart';
 
 class Screens extends StatelessWidget {
   const Screens({super.key});
@@ -46,7 +46,7 @@ class Screens extends StatelessWidget {
                 subtitle: "Challenge boxes",
                 icon: Icons.add_box,
                 number: 3,
-                widget: HomeScreen()),
+                widget: ChallengeBox()),
             buildItem(context,
                 title: "Containers second task",
                 subtitle: "alignment container, shadows",
