@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:newproject/features/HardwareMobileApp/domain/specs_model.dart';
+import 'package:newproject/features/HardwareMobileApp/domain/user_model.dart';
+import 'package:newproject/features/HardwareMobileApp/presentation/widgets/hardware_app.dart';
 import 'package:newproject/features/rowColumns/presentation/widgets/columns.dart';
 import 'package:newproject/features/ChallengeBox/presentation/widgets/challengebox.dart';
 import 'package:newproject/features/ChallengeBox/presentation/widgets/task.dart';
@@ -93,6 +96,36 @@ class Screens extends StatelessWidget {
                           link: "google.com",
                         )
                       ]),
+                )),
+            buildItem(context,
+                title: "Full screen second task",
+                subtitle: "Hardware mobile application design",
+                icon: Icons.add_box,
+                number: 3,
+                widget: HardwareApp(
+                  user: User(
+                    name: "Nancy Tolbert",
+                    deviceName: "Macbook Pro 2014",
+                    jobTitle: "UI/UX Designer",
+                    hoursWorked: 80,
+                    noOfProjects: 4,
+                    upgradeStage: 1,
+                    upgradesCost: 923,
+                    specs: [
+                      Specs(
+                          label: "CPU",
+                          value: "2.5 GHz Intel Core i7",
+                          percentage: 72),
+                      Specs(
+                          label: "RAM",
+                          percentage: 32,
+                          value: "16 GB 1600Mhz DDR3"),
+                      Specs(
+                          label: "Graphics",
+                          percentage: 93,
+                          value: "NVIDIA GeForce GT 750M 2 GB"),
+                    ],
+                  ),
                 )),
           ],
         ),
