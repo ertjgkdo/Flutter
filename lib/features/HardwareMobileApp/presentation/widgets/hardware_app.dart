@@ -36,20 +36,28 @@ class HardwareApp extends StatelessWidget {
             (Column(children: [
               Container(
                 alignment: Alignment.center,
-                margin: const EdgeInsets.only(top: 5, bottom: 45),
+                margin: const EdgeInsets.only(top: 5, bottom: 32),
                 child: Column(
                   children: [
                     Container(
                       padding: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.grey),
-                      child: const Icon(
-                        Icons.person_2_outlined,
-                        size: 70,
-                      ),
-                      //user.profilePicture != null
-                      // ? Image.network(user.profilePicture)
-                      //https://unsplash.com/photos/a-woman-with-curly-hair-smiling-for-the-camera-RPcX5545QfI
+                      height: 110,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey,
+                          image: user.profilePicture != null
+                              ? DecorationImage(
+                                  image: NetworkImage(
+                                  user.profilePicture!,
+                                ))
+                              : null),
+                      child: user.profilePicture == null
+                          ? const Icon(
+                              Icons.person_2_outlined,
+                              size: 70,
+                            )
+                          : null,
                     ),
                     Container(
                       margin: const EdgeInsets.all(8),
@@ -88,24 +96,28 @@ class HardwareApp extends StatelessWidget {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  rowDetails(
-                      label: "CUURENT PROJECTS", value: user.noOfProjects ?? 0),
-                  rowDetails(
-                      label: "HOURS WORKED", value: user.hoursWorked ?? 0),
-                  rowDetails(
-                      label: "UPGRADES STAGE", value: user.upgradeStage ?? 0),
-                  rowDetails(
-                      label: "UPGRADES COST", value: user.upgradesCost ?? 0),
-                ],
+              Container(
+                padding: EdgeInsets.all(18),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    rowDetails(
+                        label: "CUURENT PROJECTS",
+                        value: user.noOfProjects ?? 0),
+                    rowDetails(
+                        label: "HOURS WORKED", value: user.hoursWorked ?? 0),
+                    rowDetails(
+                        label: "UPGRADES STAGE", value: user.upgradeStage ?? 0),
+                    rowDetails(
+                        label: "UPGRADES COST", value: user.upgradesCost ?? 0),
+                  ],
+                ),
               ),
             ])),
             Container(
               padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
               margin: const EdgeInsets.only(
-                  left: 20, right: 20, bottom: 20, top: 45),
+                  left: 20, right: 20, bottom: 20, top: 32),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [
                   Color.fromRGBO(74, 73, 120, 1),
@@ -163,7 +175,7 @@ class HardwareApp extends StatelessWidget {
     required int percentage,
   }) {
     return Container(
-      margin: const EdgeInsets.only(top: 10, left: 10),
+      margin: const EdgeInsets.only(top: 10, left: 10, bottom: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -174,7 +186,7 @@ class HardwareApp extends StatelessWidget {
               color: percentage < 50 ? Colors.green : Colors.red,
               value: percentage / 100,
               strokeWidth: 3,
-              strokeAlign: 3,
+              strokeAlign: 0.5,
             ),
           ),
           Expanded(
@@ -209,6 +221,7 @@ class HardwareApp extends StatelessWidget {
         children: [
           Container(
             width: 60,
+            margin: EdgeInsets.only(bottom: 5),
             child: Text(
               label,
               style: const TextStyle(

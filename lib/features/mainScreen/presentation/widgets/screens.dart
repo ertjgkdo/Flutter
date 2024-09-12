@@ -111,6 +111,8 @@ class Screens extends StatelessWidget {
                     noOfProjects: 4,
                     upgradeStage: 1,
                     upgradesCost: 923,
+                    profilePicture:
+                        "https://i.pinimg.com/236x/f3/85/d7/f385d78eba93e8b768bcc04bf96fe5a5.jpg",
                     specs: [
                       Specs(
                           label: "CPU",
