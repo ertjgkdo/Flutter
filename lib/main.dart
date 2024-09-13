@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:newproject/features/mainScreen/presentation/widgets/screens.dart';
 
@@ -11,6 +13,7 @@ class MyFirstApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: MyScroll(),
       themeMode: ThemeMode.light,
       theme: ThemeData.light(useMaterial3: false),
       darkTheme: ThemeData.dark(),
@@ -18,4 +21,12 @@ class MyFirstApp extends StatelessWidget {
       home: const Screens(),
     );
   }
+}
+
+class MyScroll extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }

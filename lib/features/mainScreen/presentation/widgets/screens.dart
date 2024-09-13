@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newproject/features/BitcoinApp/presentation/widgets/home.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/specs_model.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/user_model.dart';
 import 'package:newproject/features/HardwareMobileApp/presentation/widgets/hardware_app.dart';
@@ -129,6 +130,12 @@ class Screens extends StatelessWidget {
                     ],
                   ),
                 )),
+            buildItem(context,
+                title: "Full screen third task",
+                subtitle: "Bitcoin transaction app, my profile?",
+                icon: Icons.add_box,
+                number: 3,
+                widget: MyHome()),
           ],
         ),
       ),
