@@ -180,13 +180,32 @@ class HardwareApp extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin:
-                const EdgeInsets.only(right: 20, top: 10, bottom: 10, left: 10),
-            child: CircularProgressIndicator(
-              color: percentage < 50 ? Colors.green : Colors.red,
-              value: percentage / 100,
-              strokeWidth: 3,
-              strokeAlign: 0.5,
+            margin: EdgeInsets.only(right: 10, top: 8),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                // Container(
+                //   //margin: const EdgeInsets.only(right: 10, top: 5),
+                //   width: 40,
+                //   height: 40,
+                // ),
+                CircularProgressIndicator(
+                  color: percentage < 50 ? Colors.green : Colors.red,
+                  value: percentage / 100,
+                  strokeWidth: 3,
+                  strokeAlign: 0.5,
+                ),
+                Positioned(
+                  left: 8,
+                  top: 10,
+                  child: Text(
+                    "${percentage.toString()}%",
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+                // Positioned(
+                //     child: IconButton(onPressed: () {}, icon: Icon(Icons.abc)))
+              ],
             ),
           ),
           Expanded(
