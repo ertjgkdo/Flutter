@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:newproject/features/BitcoinApp/domain/transaction_model.dart';
+import 'package:newproject/features/BitcoinApp/domain/user_model.dart';
 import 'package:newproject/features/BitcoinApp/presentation/widgets/home.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/specs_model.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/user_model.dart';
@@ -135,7 +137,41 @@ class Screens extends StatelessWidget {
                 subtitle: "Bitcoin transaction app, my profile?",
                 icon: Icons.add_box,
                 number: 3,
-                widget: MyHome()),
+                widget: MyHome(
+                  user:
+                      Profile(name: "Kathryn", balance: 5555.12, transactions: [
+                    Transaction(
+                        amount: 23000,
+                        abreviations: "BTC",
+                        assetName: "Bitcoin",
+                        percentage: 1.23,
+                        contact: Profile(
+                            name: "Lauren",
+                            balance: 2300,
+                            profilePicture:
+                                "https://i.pinimg.com/236x/f3/85/d7/f385d78eba93e8b768bcc04bf96fe5a5.jpg")),
+                    Transaction(
+                        amount: 1234.35,
+                        abreviations: "ETH ",
+                        assetName: "Ethereum",
+                        percentage: -1.07,
+                        contact: Profile(
+                            name: "Sam",
+                            balance: 582.14,
+                            profilePicture:
+                                "https://i.pinimg.com/236x/f3/85/d7/f385d78eba93e8b768bcc04bf96fe5a5.jpg")),
+                    Transaction(
+                        amount: 4500,
+                        abreviations: "ETH ",
+                        assetName: "Ethereum",
+                        percentage: 1.07,
+                        contact: Profile(
+                            name: "Tim",
+                            balance: 582.14,
+                            profilePicture:
+                                "https://i.pinimg.com/236x/f3/85/d7/f385d78eba93e8b768bcc04bf96fe5a5.jpg"))
+                  ]),
+                )),
           ],
         ),
       ),

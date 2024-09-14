@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:newproject/features/BitcoinApp/domain/user_model.dart';
 
 class MyHome extends StatelessWidget {
-  const MyHome({super.key});
+  final Profile user;
+  const MyHome({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +43,9 @@ class MyHome extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Hello, Kathryn",
-                                style: TextStyle(
+                              Text(
+                                "Hello, ${user.name}",
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 18),
                               ),
                               Row(children: [
@@ -65,34 +67,36 @@ class MyHome extends StatelessWidget {
                               top: 5,
                               bottom: 20,
                             ),
-                            child: const Text(
-                              "\$9,283.12",
-                              style: TextStyle(
+                            child: Text(
+                              "\$ ${user.balance}",
+                              style: const TextStyle(
                                 fontSize: 35,
                                 color: Colors.white,
                               ),
                             )),
-                        Row(
-                          children: [
-                            Expanded(
-                                child: actionButtons(
-                                    icon: Icons.arrow_forward,
-                                    label: "Send",
-                                    color: const Color.fromRGBO(
-                                        255, 251, 156, 1))),
-                            Expanded(
-                                child: actionButtons(
-                                    icon: Icons.arrow_back,
-                                    label: "Receive",
-                                    color: const Color.fromRGBO(
-                                        255, 251, 156, 1))),
-                            Expanded(
-                                child: actionButtons(
-                              icon: Icons.add,
-                              label: "Add Funds",
-                              color: Colors.white,
-                            )),
-                          ],
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: actionButtons(
+                                      icon: Icons.arrow_forward,
+                                      label: "Send",
+                                      color: const Color.fromRGBO(
+                                          255, 251, 156, 1))),
+                              Expanded(
+                                  child: actionButtons(
+                                      icon: Icons.arrow_back,
+                                      label: "Receive",
+                                      color: const Color.fromRGBO(
+                                          255, 251, 156, 1))),
+                              Expanded(
+                                  child: actionButtons(
+                                icon: Icons.add,
+                                label: "Add Funds",
+                                color: Colors.white,
+                              )),
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -110,7 +114,7 @@ class MyHome extends StatelessWidget {
                           ),
                         ),
                         SingleChildScrollView(
-                          padding: EdgeInsets.only(left: 15),
+                          padding: const EdgeInsets.only(left: 15),
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
@@ -134,13 +138,8 @@ class MyHome extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              recentsList(),
-                              recentsList(),
-                              recentsList(),
-                              recentsList(),
-                              recentsList(),
-                              recentsList(),
-                              recentsList(),
+                              for (int i = 0; i < user.transactions.length; i++)
+                                recentsList(index: i),
                             ],
                           ),
                         )
@@ -159,53 +158,27 @@ class MyHome extends StatelessWidget {
                       ],
                     ),
                   ),
-                  transactionsList(),
-                  transactionsList(),
-                  transactionsList()
+                  for (int i = 0; i < user.transactions.length; i++)
+                    transactionsList(index: i),
                 ],
               ),
-              Positioned(
+              const Positioned(
                 bottom: 25,
                 left: 0,
                 right: 0,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: BottomNavigationBar(
-                    backgroundColor: Colors.amber,
-                    type: BottomNavigationBarType.shifting,
-                    items: const [
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.home), label: "Home"),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.school), label: "Files"),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.person), label: "Profile")
-                    ],
-                  ),
-                ),
+                child: BottomBar(),
               )
             ],
           ),
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: Colors.black,
-      //   type: BottomNavigationBarType.shifting,
-      //   selectedItemColor: Colors.black,
-      //   unselectedItemColor: Colors.black,
-      //   items: const [
-      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-      //     BottomNavigationBarItem(icon: Icon(Icons.school), label: "Files"),
-      //     BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
-      //   ],
-      // ),
     );
   }
 
-  Container transactionsList() {
+  Container transactionsList({required int index}) {
     return Container(
       padding: const EdgeInsets.all(15),
-      margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+      margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
           borderRadius: const BorderRadius.all(Radius.circular(10))),
@@ -233,11 +206,11 @@ class MyHome extends StatelessWidget {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(bottom: 5),
-                        child: const Text("Bitcoin",
+                        child: Text(user.transactions[index].assetName,
                             style:
                                 TextStyle(color: Colors.white, fontSize: 13)),
                       ),
-                      const Text("BTC",
+                      Text(user.transactions[index].abreviations,
                           style: TextStyle(color: Colors.white, fontSize: 12))
                     ],
                   ),
@@ -246,12 +219,13 @@ class MyHome extends StatelessWidget {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(bottom: 5),
-                        child: const Text("\$23,746.15",
+                        child: Text(
+                            "\$ ${user.transactions[index].amount.toString()}",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 13)),
                       ),
-                      const Text("+1.98%",
-                          style: TextStyle(color: Colors.white, fontSize: 12)),
+                      transactionPercentage(
+                          percentage: user.transactions[index].percentage),
                     ],
                   ),
                 ]),
@@ -261,21 +235,36 @@ class MyHome extends StatelessWidget {
     );
   }
 
-  Column recentsList() {
+  Widget transactionPercentage({required double percentage}) {
+    bool isPositive = percentage > 0;
+    return Text(
+        isPositive
+            ? "+${percentage.toString()} %"
+            : " ${percentage.toString()} %",
+        style: TextStyle(
+            color: isPositive ? Colors.green : Colors.red, fontSize: 12));
+  }
+
+  Column recentsList({required int index}) {
     return Column(
       children: [
         Container(
           width: 50,
           height: 50,
           margin: const EdgeInsets.only(left: 5, right: 5),
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.grey,
-          ),
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey,
+              image: user.transactions[index].contact.profilePicture != null
+                  ? DecorationImage(
+                      image: NetworkImage(
+                      user.transactions[index].contact.profilePicture!,
+                    ))
+                  : null),
         ),
-        const Text(
-          "User 1",
-          style: TextStyle(color: Colors.white, fontSize: 13),
+        Text(
+          user.transactions[index].contact.name,
+          style: const TextStyle(color: Colors.white, fontSize: 13),
         ),
       ],
     );
@@ -285,23 +274,29 @@ class MyHome extends StatelessWidget {
       {required IconData icon, required String label, required Color color}) {
     return Column(
       children: [
-        Container(
-          width: 105,
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-              color: color,
-              borderRadius: const BorderRadius.all(Radius.circular(30))),
-          child: IconButton(
-            icon: Icon(icon),
-            onPressed: () {},
+        Expanded(
+          flex: 3,
+          child: Container(
+            width: 105,
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                color: color,
+                borderRadius: const BorderRadius.all(Radius.circular(30))),
+            child: IconButton(
+              icon: Icon(icon),
+              onPressed: () {},
+            ),
           ),
         ),
-        Container(
-            margin: const EdgeInsets.all(10),
-            child: Text(
-              label,
-              style: const TextStyle(color: Colors.white, fontSize: 13),
-            ))
+        Expanded(
+          flex: 2,
+          child: Container(
+              margin: const EdgeInsets.all(10),
+              child: Text(
+                label,
+                style: const TextStyle(color: Colors.white, fontSize: 13),
+              )),
+        )
       ],
     );
   }
@@ -321,5 +316,69 @@ class MyHome extends StatelessWidget {
           color: Colors.white,
           size: 18,
         ));
+  }
+}
+
+class BottomBar extends StatefulWidget {
+  const BottomBar({super.key});
+
+  @override
+  State<BottomBar> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
+  bool isSelected = false;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 80),
+        child: Container(
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(const Radius.circular(20)),
+              color: Color.fromRGBO(37, 37, 38, 1)),
+          child: Row(
+            children: [
+              Expanded(
+                  child:
+                      bottomBarIcons(icon: Icons.home_outlined, label: "Home")),
+              Expanded(child: bottomBarIcons(icon: Icons.wallet)),
+              Expanded(child: bottomBarIcons(icon: Icons.person)),
+            ],
+          ),
+        ));
+  }
+
+  Widget bottomBarIcons({required IconData icon, String label = ""}) {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            // decoration: isSelected
+            //     ? const BoxDecoration(shape: BoxShape.circle, color: Colors.white)
+            //     : null,
+            child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    isSelected = !isSelected;
+                  });
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  icon,
+                  color: isSelected ? Colors.black : Colors.white,
+                )),
+          ),
+        ),
+        if (isSelected)
+          Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: Expanded(
+                child: Text(
+                  label,
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                ),
+              )),
+      ],
+    );
   }
 }
