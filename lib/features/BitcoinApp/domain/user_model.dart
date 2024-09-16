@@ -10,4 +10,6 @@ class Profile {
       required this.balance,
       this.transactions = const [],
       this.profilePicture});
+
+  get noOfTransaction => transactions.length;
 }
