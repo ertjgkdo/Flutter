@@ -5,6 +5,7 @@ import 'package:newproject/features/BitcoinApp/presentation/widgets/home.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/specs_model.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/user_model.dart';
 import 'package:newproject/features/HardwareMobileApp/presentation/widgets/hardware_app.dart';
+import 'package:newproject/features/ProfileScreen/presentation/widgets/profile.dart';
 import 'package:newproject/features/rowColumns/presentation/widgets/columns.dart';
 import 'package:newproject/features/ChallengeBox/presentation/widgets/challengebox.dart';
 import 'package:newproject/features/ChallengeBox/presentation/widgets/task.dart';
@@ -192,6 +193,12 @@ class Screens extends StatelessWidget {
                                 "https://i.pinimg.com/236x/f3/85/d7/f385d78eba93e8b768bcc04bf96fe5a5.jpg")),
                   ]),
                 )),
+            buildItem(context,
+                title: "Full screen fourth task",
+                subtitle: "Profile screen for a social media app?",
+                icon: Icons.add_box,
+                number: 3,
+                widget: MyProfile()),
           ],
         ),
       ),

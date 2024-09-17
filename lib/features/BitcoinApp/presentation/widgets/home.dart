@@ -363,55 +363,52 @@ class _BottomBarState extends State<BottomBar> {
   bool profileSelected = false;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Container(
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                color: Color.fromRGBO(37, 37, 38, 1)),
-            child: Row(
-              children: [
-                Expanded(
-                    child: bottomBarIcons(
-                        icon: Icons.home_outlined,
-                        label: "Home",
-                        isSelected: homeSelected,
-                        onPressed: () {
-                          setState(() {
-                            homeSelected = true;
-                            walletSelected = false;
-                            profileSelected = false;
-                          });
-                        })),
-                Expanded(
-                    child: bottomBarIcons(
-                        icon: Icons.wallet,
-                        label: "Wallet",
-                        isSelected: walletSelected,
-                        onPressed: () {
-                          setState(() {
-                            walletSelected = true;
-                            homeSelected = false;
-                            profileSelected = false;
-                          });
-                        })),
-                Expanded(
-                    child: bottomBarIcons(
-                        icon: Icons.person,
-                        label: "Profile",
-                        isSelected: profileSelected,
-                        onPressed: () {
-                          setState(() {
-                            profileSelected = true;
-                            homeSelected = false;
-                            walletSelected = false;
-                          });
-                        })),
-              ],
-            ),
-          )),
-    );
+    return Container(
+        color: Colors.transparent,
+        // padding: const EdgeInsets.symmetric(horizontal: 70),
+        child: Container(
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              color: Color.fromRGBO(37, 37, 38, 1)),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              bottomBarIcons(
+                  icon: Icons.home_outlined,
+                  label: "Homehomehomehome",
+                  isSelected: homeSelected,
+                  onPressed: () {
+                    setState(() {
+                      homeSelected = !homeSelected;
+                      walletSelected = false;
+                      profileSelected = false;
+                    });
+                  }),
+              bottomBarIcons(
+                  icon: Icons.wallet,
+                  label: "Wallet",
+                  isSelected: walletSelected,
+                  onPressed: () {
+                    setState(() {
+                      walletSelected = !walletSelected;
+                      homeSelected = false;
+                      profileSelected = false;
+                    });
+                  }),
+              bottomBarIcons(
+                  icon: Icons.person,
+                  label: "Profile",
+                  isSelected: profileSelected,
+                  onPressed: () {
+                    setState(() {
+                      profileSelected = !profileSelected;
+                      homeSelected = false;
+                      walletSelected = false;
+                    });
+                  }),
+            ],
+          ),
+        ));
   }
 
   Widget bottomBarIcons(
@@ -435,10 +432,11 @@ class _BottomBarState extends State<BottomBar> {
                 color: isSelected ? Colors.black : Colors.white,
               )),
         ),
-        Text(
-          isSelected ? label : "",
-          style: const TextStyle(color: Colors.white, fontSize: 14),
-        )
+        if (isSelected)
+          Text(
+            label,
+            style: const TextStyle(color: Colors.white, fontSize: 14),
+          )
       ],
     );
   }
