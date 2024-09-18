@@ -5,6 +5,8 @@ import 'package:newproject/features/BitcoinApp/presentation/widgets/home.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/specs_model.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/user_model.dart';
 import 'package:newproject/features/HardwareMobileApp/presentation/widgets/hardware_app.dart';
+import 'package:newproject/features/ProfileScreen/domain/posts_model.dart';
+import 'package:newproject/features/ProfileScreen/domain/users_model.dart';
 import 'package:newproject/features/ProfileScreen/presentation/widgets/profile.dart';
 import 'package:newproject/features/rowColumns/presentation/widgets/columns.dart';
 import 'package:newproject/features/ChallengeBox/presentation/widgets/challengebox.dart';
@@ -14,8 +16,16 @@ import 'package:newproject/features/podcastScreen/domain/podcast_model.dart';
 import 'package:newproject/features/generatorScreen/presentation/widget/generators.dart';
 
 class Screens extends StatelessWidget {
-  const Screens({super.key});
-
+  Screens({super.key});
+  final Person snsUser = Person(
+      firstName: "Nilesh",
+      noOfPosts: 12,
+      noOfFollowers: 13,
+      noOfFollowing: 50,
+      story:
+          "https://i.pinimg.com/236x/f3/85/d7/f385d78eba93e8b768bcc04bf96fe5a5.jpg",
+      posts: [],
+      friends: []);
   //title subtitile icon, number, widget
   Widget buildItem(BuildContext context,
       {required String title,
@@ -198,7 +208,29 @@ class Screens extends StatelessWidget {
                 subtitle: "Profile screen for a social media app?",
                 icon: Icons.add_box,
                 number: 3,
-                widget: MyProfile()),
+                widget: MyProfile(
+                  user: Person(
+                      firstName: "Darlene",
+                      lastName: "Beats",
+                      username: "dw_beats",
+                      noOfPosts: 360,
+                      noOfFollowers: 160,
+                      noOfFollowing: 140,
+                      pfp:
+                          "https://i.pinimg.com/236x/f3/85/d7/f385d78eba93e8b768bcc04bf96fe5a5.jpg",
+                      posts: [
+                        Post(
+                            poster: snsUser.firstName,
+                            postTime: "Posted in u8s - 2h ago",
+                            postCaption:
+                                "Discover adventure in patagonia's peaks or serenity provence's @hamlets - arrival",
+                            postImage:
+                                "https://i.pinimg.com/236x/f3/85/d7/f385d78eba93e8b768bcc04bf96fe5a5.jpg")
+                      ],
+                      friends: [
+                        snsUser
+                      ]),
+                )),
           ],
         ),
       ),

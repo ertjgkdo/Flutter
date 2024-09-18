@@ -18,7 +18,7 @@ class MyFirstApp extends StatelessWidget {
       theme: ThemeData.light(useMaterial3: false),
       darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      home: const Screens(),
+      home: Screens(),
     );
   }
 }
