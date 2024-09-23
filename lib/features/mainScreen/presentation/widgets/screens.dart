@@ -214,14 +214,14 @@ class Screens extends StatelessWidget {
                       lastName: "Beats",
                       username: "dw_beats",
                       noOfPosts: 360,
-                      noOfFollowers: 160,
-                      noOfFollowing: 140,
+                      noOfFollowers: 160000,
+                      noOfFollowing: 140000,
                       pfp:
                           "https://i.pinimg.com/236x/f3/85/d7/f385d78eba93e8b768bcc04bf96fe5a5.jpg",
                       posts: [
                         Post(
                             poster: snsUser.firstName,
-                            postTime: "Posted in u8s - 2h ago",
+                            postTime: DateTime.now(),
                             postCaption:
                                 "Discover adventure in patagonia's peaks or serenity provence's @hamlets - arrival",
                             postImage:

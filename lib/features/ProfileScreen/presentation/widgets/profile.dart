@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:newproject/features/ProfileScreen/domain/users_model.dart';
 
 class MyProfile extends StatelessWidget {
@@ -169,15 +170,26 @@ class MyProfile extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                margin:
-                                    const EdgeInsets.only(left: 10, top: 10),
-                                padding: const EdgeInsets.all(5),
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.blue,
-                                ),
-                                child: const Icon(Icons.person),
-                              ),
+                                  width: 40,
+                                  margin: const EdgeInsets.only(
+                                      left: 5, bottom: 14),
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.blue,
+                                      image: user.pfp != null
+                                          ? DecorationImage(
+                                              image: NetworkImage(
+                                                user.pfp!,
+                                              ),
+                                              fit: BoxFit.cover)
+                                          : null),
+                                  child: user.pfp == null
+                                      ? const Icon(
+                                          Icons.person_2_outlined,
+                                          size: 70,
+                                        )
+                                      : null),
                               Container(
                                 margin:
                                     const EdgeInsets.only(top: 32, left: 17),
@@ -326,7 +338,7 @@ class MyProfile extends StatelessWidget {
     return Column(
       children: [
         Text(
-          value.toString(),
+          NumberFormat.compact().format(value).toString(),
           style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
         ),
         Text(
