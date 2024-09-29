@@ -1,197 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:newproject/features/BitcoinApp/domain/user_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:newproject/features/BitcoinApp/presentation/state/state.dart';
+import 'package:newproject/features/BitcoinApp/presentation/widgets/bottom_navbar.dart';
+import 'package:newproject/features/BitcoinApp/presentation/widgets/list.dart';
+import 'package:newproject/features/mainScreen/presentation/widgets/screens.dart';
 
-class MyHome extends StatelessWidget {
+class MyHome extends ConsumerWidget {
   final Profile user;
   const MyHome({super.key, required this.user});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentPage = ref.watch(selectedProvider);
     return Scaffold(
       body: Container(
         color: const Color.fromRGBO(11, 11, 11, 1),
         child: Stack(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            IndexedStack(
+              index: currentPage,
               children: [
+                home(),
+                const ListTracker(),
                 Container(
-                  padding: const EdgeInsets.all(15),
-                  height: 270,
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [
-                            Color.fromRGBO(27, 37, 122, 1),
-                            Color.fromRGBO(38, 57, 194, 1),
-                            Color.fromRGBO(74, 92, 217, 1),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15),
-                      )),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 10,
-                          bottom: 20,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Hello, ${user.name}",
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 18),
-                            ),
-                            Row(children: [
-                              topRightIcons(icon: Icons.square_outlined),
-                              topRightIcons(
-                                  icon: Icons.notifications_none_outlined)
-                            ]),
-                          ],
-                        ),
-                      ),
-                      const Text(
-                        "Your balance • USD",
-                        style: TextStyle(
-                            color: Color.fromRGBO(176, 180, 227, 1),
-                            fontSize: 15),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.only(
-                            top: 5,
-                            bottom: 20,
-                          ),
-                          child: Text(
-                            "\$ ${user.balance}",
-                            style: const TextStyle(
-                              fontSize: 35,
-                              color: Colors.white,
-                            ),
-                          )),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: actionButtons(
-                                    icon: Icons.arrow_forward,
-                                    label: "Send",
-                                    color: const Color.fromRGBO(
-                                        255, 251, 156, 1))),
-                            Expanded(
-                                child: actionButtons(
-                                    icon: Icons.arrow_back,
-                                    label: "Receive",
-                                    color: const Color.fromRGBO(
-                                        255, 251, 156, 1))),
-                            Expanded(
-                                child: actionButtons(
-                              icon: Icons.add,
-                              label: "Add Funds",
-                              color: Colors.white,
-                            )),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                  color: Colors.blue,
                 ),
-                Container(
-                    // margin: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                      Container(
-                        margin: const EdgeInsets.all(15),
-                        child: const Text(
-                          "Recents",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 70,
-                        child: ListView(
-                            padding: const EdgeInsets.only(left: 15),
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              Row(
-                                children: [
-                                  Column(
-                                    children: [
-                                      Container(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 5),
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.grey,
-                                        ),
-                                        child: IconButton(
-                                          icon: const Icon(Icons.search),
-                                          onPressed: () {},
-                                        ),
-                                      ),
-                                      const Text(
-                                        "Search",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 13),
-                                      ),
-                                    ],
-                                  ),
-                                  if (user.noOfTransaction > 0)
-                                    for (int i = 0;
-                                        i < user.noOfTransaction;
-                                        i++)
-                                      recentsList(index: i)
-                                  else
-                                    const Center(
-                                      child: Text(
-                                        "No recent contacts.",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    )
-                                ],
-                              ),
-                            ]),
-                      )
-                    ])),
-                Container(
-                  margin: const EdgeInsets.all(15),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Assets",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                      Text("See all",
-                          style: TextStyle(color: Colors.white, fontSize: 15))
-                    ],
-                  ),
-                ),
-                if (user.noOfTransaction > 0)
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        for (int i = 0; i < user.noOfTransaction; i++)
-                          transactionsList(index: i)
-                      ],
-                    ),
-                  )
-                else
-                  const Center(
-                    child: Text(
-                      "There are no transactions.",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
               ],
             ),
             const Positioned(
@@ -203,6 +37,181 @@ class MyHome extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Column home() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(15),
+          height: 270,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color.fromRGBO(27, 37, 122, 1),
+                Color.fromRGBO(38, 57, 194, 1),
+                Color.fromRGBO(74, 92, 217, 1),
+              ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              )),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 10,
+                  bottom: 20,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Hello, ${user.name}",
+                      style: const TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                    Row(children: [
+                      topRightIcons(icon: Icons.square_outlined),
+                      topRightIcons(icon: Icons.notifications_none_outlined)
+                    ]),
+                  ],
+                ),
+              ),
+              const Text(
+                "Your balance • USD",
+                style: TextStyle(
+                    color: Color.fromRGBO(176, 180, 227, 1), fontSize: 15),
+              ),
+              Container(
+                  margin: const EdgeInsets.only(
+                    top: 5,
+                    bottom: 20,
+                  ),
+                  child: Text(
+                    "\$ ${user.balance}",
+                    style: const TextStyle(
+                      fontSize: 35,
+                      color: Colors.white,
+                    ),
+                  )),
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: actionButtons(
+                            icon: Icons.arrow_forward,
+                            label: "Send",
+                            rotationAngle: 320,
+                            color: const Color.fromRGBO(255, 251, 156, 1))),
+                    Expanded(
+                        child: actionButtons(
+                            icon: Icons.arrow_back,
+                            label: "Receive",
+                            rotationAngle: 320,
+                            color: const Color.fromRGBO(255, 251, 156, 1))),
+                    Expanded(
+                        child: actionButtons(
+                      rotationAngle: 0,
+                      icon: Icons.add,
+                      label: "Add Funds",
+                      color: Colors.white,
+                    )),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        Container(
+            // margin: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            margin: const EdgeInsets.all(15),
+            child: const Text(
+              "Recents",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+          ),
+          SizedBox(
+            height: 70,
+            child: ListView(
+                padding: const EdgeInsets.only(left: 15),
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey,
+                            ),
+                            child: IconButton(
+                              icon: const Icon(Icons.search),
+                              onPressed: () {},
+                            ),
+                          ),
+                          const Text(
+                            "Search",
+                            style: TextStyle(color: Colors.white, fontSize: 13),
+                          ),
+                        ],
+                      ),
+                      if (user.noOfTransaction > 0)
+                        for (int i = 0; i < user.noOfTransaction; i++)
+                          recentsList(index: i)
+                      else
+                        const Center(
+                          child: Text(
+                            "No recent contacts.",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                    ],
+                  ),
+                ]),
+          )
+        ])),
+        Container(
+          margin: const EdgeInsets.all(15),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Assets",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+              Text("See all",
+                  style: TextStyle(color: Colors.white, fontSize: 15))
+            ],
+          ),
+        ),
+        if (user.noOfTransaction > 0)
+          Expanded(
+            child: ListView(
+              children: [
+                for (int i = 0; i < user.noOfTransaction; i++)
+                  transactionsList(index: i)
+              ],
+            ),
+          )
+        else
+          const Center(
+            child: Text(
+              "There are no transactions.",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          )
+      ],
     );
   }
 
@@ -238,11 +247,12 @@ class MyHome extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(bottom: 5),
                         child: Text(user.transactions[index].assetName,
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 13)),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 13)),
                       ),
                       Text(user.transactions[index].abreviations,
-                          style: TextStyle(color: Colors.white, fontSize: 12))
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 12))
                     ],
                   ),
                   Column(
@@ -252,8 +262,8 @@ class MyHome extends StatelessWidget {
                         margin: const EdgeInsets.only(bottom: 5),
                         child: Text(
                             "\$ ${user.transactions[index].amount.toString()}",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 13)),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 13)),
                       ),
                       transactionPercentage(
                           percentage: user.transactions[index].percentage),
@@ -302,7 +312,10 @@ class MyHome extends StatelessWidget {
   }
 
   Column actionButtons(
-      {required IconData icon, required String label, required Color color}) {
+      {required IconData icon,
+      required String label,
+      required Color color,
+      required double rotationAngle}) {
     return Column(
       children: [
         Expanded(
@@ -314,7 +327,10 @@ class MyHome extends StatelessWidget {
                 color: color,
                 borderRadius: const BorderRadius.all(Radius.circular(30))),
             child: IconButton(
-              icon: Icon(icon),
+              icon: Transform.rotate(
+                child: Icon(icon),
+                angle: rotationAngle,
+              ),
               onPressed: () {},
             ),
           ),
@@ -347,97 +363,5 @@ class MyHome extends StatelessWidget {
           color: Colors.white,
           size: 18,
         ));
-  }
-}
-
-class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
-
-  @override
-  State<BottomBar> createState() => _BottomBarState();
-}
-
-class _BottomBarState extends State<BottomBar> {
-  bool homeSelected = false;
-  bool walletSelected = false;
-  bool profileSelected = false;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.transparent,
-        // padding: const EdgeInsets.symmetric(horizontal: 70),
-        child: Container(
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              color: Color.fromRGBO(37, 37, 38, 1)),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              bottomBarIcons(
-                  icon: Icons.home_outlined,
-                  label: "Homehomehomehome",
-                  isSelected: homeSelected,
-                  onPressed: () {
-                    setState(() {
-                      homeSelected = !homeSelected;
-                      walletSelected = false;
-                      profileSelected = false;
-                    });
-                  }),
-              bottomBarIcons(
-                  icon: Icons.wallet,
-                  label: "Wallet",
-                  isSelected: walletSelected,
-                  onPressed: () {
-                    setState(() {
-                      walletSelected = !walletSelected;
-                      homeSelected = false;
-                      profileSelected = false;
-                    });
-                  }),
-              bottomBarIcons(
-                  icon: Icons.person,
-                  label: "Profile",
-                  isSelected: profileSelected,
-                  onPressed: () {
-                    setState(() {
-                      profileSelected = !profileSelected;
-                      homeSelected = false;
-                      walletSelected = false;
-                    });
-                  }),
-            ],
-          ),
-        ));
-  }
-
-  Widget bottomBarIcons(
-      {required IconData icon,
-      required String label,
-      required bool isSelected,
-      required Function() onPressed}) {
-    return Row(
-      children: [
-        Container(
-          padding: EdgeInsets.all(1),
-          margin: EdgeInsets.only(right: 5),
-          alignment: Alignment.center,
-          decoration: isSelected
-              ? const BoxDecoration(shape: BoxShape.circle, color: Colors.white)
-              : null,
-          child: IconButton(
-              onPressed: onPressed,
-              icon: Icon(
-                icon,
-                color: isSelected ? Colors.black : Colors.white,
-              )),
-        ),
-        if (isSelected)
-          Text(
-            label,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
-          )
-      ],
-    );
   }
 }

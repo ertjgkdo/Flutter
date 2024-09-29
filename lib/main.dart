@@ -1,10 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:newproject/features/mainScreen/presentation/widgets/screens.dart';
 
 void main() {
-  runApp(const MyFirstApp());
+  runApp(const ProviderScope(child: MyFirstApp()));
 }
 
 class MyFirstApp extends StatelessWidget {

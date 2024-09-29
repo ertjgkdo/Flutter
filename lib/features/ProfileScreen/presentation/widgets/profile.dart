@@ -133,8 +133,8 @@ class MyProfile extends StatelessWidget {
                           offset: Offset(0, -1),
                         )
                       ], color: Colors.white),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      child: Wrap(
+                        spacing: 53,
                         children: [
                           userProfileDetails(
                               value: user.noOfPosts, label: "Post"),
@@ -289,7 +289,7 @@ class MyProfile extends StatelessWidget {
                                   style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
                                 Text(
-                                  user.posts[i].postTime,
+                                  '${user.posts[i].postTime}',
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 135, 134, 134),
                                       fontSize: 13),
