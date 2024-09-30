@@ -1,8 +1,9 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ListController extends Notifier<List<String>> {
   // decide initial value/state
-
+  final TextEditingController inputController = TextEditingController();
   @override
   List<String> build() {
     return ["Test", "item2"];
@@ -11,8 +12,6 @@ class ListController extends Notifier<List<String>> {
   addItem(String item) {
     // using cascade and method of list
     state = [...state..add(item)];
-
-    state = [...state, item];
   }
 
   updateItem(int index, String newValue) {

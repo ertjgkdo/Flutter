@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:newproject/features/BitcoinApp/presentation/state/state.dart';
+import 'package:newproject/features/BitcoinApp/presentation/widgets/list_item_form.dart';
 
 class ListTracker extends ConsumerWidget {
   const ListTracker({super.key});
@@ -9,9 +10,11 @@ class ListTracker extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final list = ref.watch(listProvider);
     final listController = ref.read(listProvider.notifier);
+    final inputcontroller = listController.inputController;
     return Scaffold(
       body: Column(
         children: [
+          ListItemForm(),
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) => ListTile(
@@ -19,8 +22,14 @@ class ListTracker extends ConsumerWidget {
                     onPressed: () {
                       listController.deleteIndex(index);
                     },
-                    icon: Icon(Icons.delete)),
+                    icon: const Icon(Icons.delete)),
                 title: Text(list[index]),
+                leading: IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () {
+                    listController.updateItem(index, inputcontroller.text);
+                  },
+                ),
               ),
               separatorBuilder: (context, index) => const SizedBox(
                 height: 10,
@@ -31,11 +40,14 @@ class ListTracker extends ConsumerWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
-          listController.addItem('hello');
+          if (inputcontroller.text.isNotEmpty) {
+            listController.addItem(inputcontroller.text);
+          }
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }
