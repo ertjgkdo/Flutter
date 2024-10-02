@@ -1,5 +1,3 @@
-import 'package:newproject/features/ProfileScreen/domain/users_model.dart';
-
 class Post {
   final String poster;
   final DateTime postTime;
