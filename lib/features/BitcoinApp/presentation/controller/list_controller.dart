@@ -8,6 +8,8 @@ class ListController extends Notifier<List<String>> {
   // decide initial value/state
   final TextEditingController inputController = TextEditingController();
 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   List<String> build() {
     return ["Test", "item2"];
@@ -15,7 +17,9 @@ class ListController extends Notifier<List<String>> {
 
   addItem(String item) {
     // using cascade and method of list
-    if (!state.contains(item)) {
+    if (!state
+        .map((existingItem) => existingItem.toLowerCase())
+        .contains(item.toLowerCase())) {
       state = [...state..add(item)];
     } else {
       ref.read(errorMessageProvider.notifier).state =
@@ -23,9 +27,17 @@ class ListController extends Notifier<List<String>> {
     }
   }
 
-  updateItem(int index, String newValue) {
+  update(String item) {
+    final index =
+        state.indexWhere((value) => value.toLowerCase() == item.toLowerCase());
+    if (index != -1) updateByIndex(index, item);
+  }
+
+  updateByIndex(int index, String newValue) {
 // update
-    if (!state.contains(newValue)) {
+    if (!state
+        .map((existingItem) => existingItem.toLowerCase())
+        .contains(newValue.toLowerCase())) {
       state = [...state..[index] = newValue];
     } else {
       ref.read(errorMessageProvider.notifier).state =

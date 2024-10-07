@@ -21,7 +21,8 @@ class ListItemForm extends ConsumerWidget {
                 onPressed: () {
                   if (inputController.text.isNotEmpty) {
                     if (isEditing) {
-                      listController.updateItem(index!, inputController.text);
+                      listController.updateByIndex(
+                          index!, inputController.text);
                     } else {
                       listController.addItem(inputController.text);
                     }
