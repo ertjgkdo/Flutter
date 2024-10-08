@@ -20,7 +20,7 @@ class _ListItemFormNewState extends State<ListItemFormNew> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late final isEditing = widget.item != null;
 
-  late LogModel currentItem = widget.item ?? LogModel();
+  late LogModel currentItem = widget.item ?? const LogModel();
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
@@ -32,10 +32,13 @@ class _ListItemFormNewState extends State<ListItemFormNew> {
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(
+                onChanged: (value) {
+                  currentItem = currentItem.copyWith(title: value);
+                },
+                decoration: const InputDecoration(
                   labelText: "Title",
-                  suffixIcon: IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.save)),
+                  // suffixIcon: IconButton(
+                  //     onPressed: () {}, icon: const Icon(Icons.save)),
                 ),
                 controller: titleController,
                 validator: (value) {
@@ -50,6 +53,9 @@ class _ListItemFormNewState extends State<ListItemFormNew> {
                 },
               ),
               TextFormField(
+                onChanged: (value) {
+                  currentItem = currentItem.copyWith(description: value);
+                },
                 decoration: InputDecoration(
                   labelText: "Description",
                   suffixIcon: IconButton(
@@ -89,14 +95,15 @@ class _ListItemFormNewState extends State<ListItemFormNew> {
                       Navigator.pop(context);
                       if (isEditing) {
                         // editing existing entry
-                        listController.update(widget.item!);
+                        listController.update(
+                          context: context,
+                          item: currentItem.copyWith(dateTime: DateTime.now()),
+                        );
                       } else {
                         // creating new entry
                         listController.addItem(context,
-                            item: LogModel(
-                                title: titleController.text,
-                                description: descController.text,
-                                date: DateTime.now()));
+                            item:
+                                currentItem.copyWith(dateTime: DateTime.now()));
                       }
                     } else {
                       //

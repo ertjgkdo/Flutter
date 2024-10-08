@@ -15,6 +15,7 @@ class ListTracker extends ConsumerWidget {
     // final showTextfield = ref.watch(showFieldProvider);
     // final isEditing = ref.watch(editingProvider);
     // final editingIndex = ref.watch(editingIndexProvider);
+
     return Scaffold(
       body: Column(
         children: [
@@ -30,7 +31,7 @@ class ListTracker extends ConsumerWidget {
                   trailing: SizedBox(
                     child: IconButton(
                         onPressed: () {
-                          listController.deleteIndex(index);
+                          listController.deleteIndex(context, index: index);
                         },
                         icon: const Icon(
                           Icons.delete,
@@ -39,7 +40,7 @@ class ListTracker extends ConsumerWidget {
                   ),
                   title: Text("${item.title}"),
                   subtitle: Text("${item.description}"),
-                  leading: Text("${item.date?.year}"),
+                  leading: Text("${item.date?.hour}: ${item.date?.minute}"),
                 );
               },
               separatorBuilder: (context, index) => const SizedBox(

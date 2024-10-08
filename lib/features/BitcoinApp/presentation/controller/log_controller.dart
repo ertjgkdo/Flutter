@@ -23,50 +23,93 @@ class LogController extends Notifier<List<LogModel>> {
 
   addItem(BuildContext context, {required LogModel item}) {
     // using cascade and method of list
-    // if (!state
+    bool doesItemExist =
+        state.any((existingItem) => existingItem.title == item.title);
+    if (!doesItemExist) {
+      state = [...state..add(item)];
 
-    //     ) {
-    state = [...state..add(item)];
+      // show success snack bar here using context
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text("Item Added!"),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("Item already exists!"),
+        ),
+      );
+    }
 
-    // show success snack bar here using context
+    // } else {
+    //   ref.read(errorMessageProvider.notifier).state =
+    //       "An item with the title already exists!";
+    // }
+  }
+
+  update({required BuildContext context, required LogModel item}) {
+    final index = state.indexWhere((value) => value.title == item.title);
+
+    if (index != -1) {
+      if (item == state[index]) print("NO changes made");
+      updateByIndex(context: context, index: index, newValue: item);
+    }
+  }
+
+  updateByIndex(
+      {required BuildContext context,
+      required int index,
+      required LogModel newValue}) {
+// update
+
+    state = [...state..[index] = newValue];
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         backgroundColor: Colors.green,
-        content: Text("Item Added!"),
+        content: Text("Item Updated!"),
       ),
     );
-
-    // } else {
-    //   ref.read(errorMessageProvider.notifier).state =
-    //       "An item with the title already exists!";
-    // }
   }
 
-  update(LogModel item) {
-    final index = state.indexWhere((value) => value.id == item.id);
-    if (index != -1) updateByIndex(index, item);
-  }
+  Future<void> deleteIndex(BuildContext context, {required int index}) async {
+    bool? confirm = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Deletion'),
+          content: Text('Are you sure you want to delete this item?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
 
-  updateByIndex(int index, LogModel newValue) {
-// update
-    // if (!state
-    //     .map((existingItem) => existingItem.toLowerCase())
-    //     .contains(newValue.toLowerCase())) {
-    state = [...state..[index] = newValue];
-    // } else {
-    //   ref.read(errorMessageProvider.notifier).state =
-    //       "An item with the title already exists!";
-    // }
-  }
-
-  deleteIndex(int index) {
-    state = [...state..removeAt(index)];
+    if (confirm == true) {
+      state = [...state..removeAt(index)];
+    }
   }
 
   delete(LogModel item) {
 // remove
 
     state = [...state..remove(item)];
+  }
+
+  compare() {
+    LogModel a = LogModel(title: "title1");
+    LogModel b = LogModel(title: "title2");
+    print(a == b);
   }
 
   clear() {
