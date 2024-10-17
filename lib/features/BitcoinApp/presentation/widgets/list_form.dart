@@ -97,13 +97,12 @@ class _ListItemFormNewState extends State<ListItemFormNew> {
                         // editing existing entry
                         listController.update(
                           context: context,
-                          item: currentItem.copyWith(dateTime: DateTime.now()),
+                          item: currentItem.copyWith(date: DateTime.now()),
                         );
                       } else {
                         // creating new entry
                         listController.addItem(context,
-                            item:
-                                currentItem.copyWith(dateTime: DateTime.now()));
+                            item: currentItem.copyWith(date: DateTime.now()));
                       }
                     } else {
                       //

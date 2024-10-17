@@ -12,11 +12,13 @@ class LogModel extends Equatable {
   // TODO: implement props
   List<Object?> get props => [title, description, date];
 
-  LogModel copyWith({String? title, String? description, DateTime? dateTime}) {
+  LogModel copyWith(
+      {String? id, String? title, String? description, DateTime? date}) {
     return LogModel(
+      id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
-      date: dateTime ?? this.date,
+      date: date ?? this.date,
     );
   }
 }

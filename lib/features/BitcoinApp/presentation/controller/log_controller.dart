@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:newproject/features/BitcoinApp/domain/log_model.dart';
 import 'package:newproject/features/BitcoinApp/presentation/widgets/list_form.dart';
+import 'package:uuid/uuid.dart';
 
 class LogController extends Notifier<List<LogModel>> {
   // decide initial value/state
@@ -26,7 +27,7 @@ class LogController extends Notifier<List<LogModel>> {
     bool doesItemExist =
         state.any((existingItem) => existingItem.title == item.title);
     if (!doesItemExist) {
-      state = [...state..add(item)];
+      state = [...state..add(item.copyWith(id: const Uuid().v6()))];
 
       // show success snack bar here using context
       ScaffoldMessenger.of(context).showSnackBar(
@@ -51,7 +52,7 @@ class LogController extends Notifier<List<LogModel>> {
   }
 
   update({required BuildContext context, required LogModel item}) {
-    final index = state.indexWhere((value) => value.title == item.title);
+    final index = state.indexWhere((value) => value.id == item.id);
 
     if (index != -1) {
       if (item == state[index]) print("NO changes made");
