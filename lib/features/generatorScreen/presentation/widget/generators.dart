@@ -48,116 +48,111 @@ class Generators extends StatelessWidget {
                             topRight: Radius.circular(15),
                           )),
                       //Row inside the first container
-                      child: Expanded(
-                        child: Row(
-                          children: [
-                            //Two columns inside the row:
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Expanded(
-                                      child: Column(children: [
-                                    Text(
-                                      "ACTIVE",
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(156, 212, 207, 1),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                      ),
+                      child: Row(
+                        children: [
+                          //Two columns inside the row:
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Expanded(
+                                    child: Column(children: [
+                                  Text(
+                                    "ACTIVE",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(156, 212, 207, 1),
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
                                     ),
-                                    Text(
-                                      "GENERATORS",
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(156, 212, 207, 1),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                      ),
+                                  ),
+                                  Text(
+                                    "GENERATORS",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(156, 212, 207, 1),
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
                                     ),
-                                  ])),
-                                  //The icon and number in row
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                          margin:
-                                              const EdgeInsets.only(right: 10),
-                                          child: const Icon(
-                                            Icons.whatshot,
+                                  ),
+                                ])),
+                                //The icon and number in row
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 10),
+                                        child: const Icon(
+                                          Icons.whatshot,
+                                          color:
+                                              Color.fromRGBO(156, 212, 207, 1),
+                                        )),
+                                    const Text("3",
+                                        style: TextStyle(
                                             color: Color.fromRGBO(
-                                                156, 212, 207, 1),
-                                          )),
-                                      const Text("3",
-                                          style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  218, 245, 239, 1),
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 20))
-                                    ],
-                                  )
-                                ],
-                              ),
+                                                218, 245, 239, 1),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 20))
+                                  ],
+                                )
+                              ],
                             ),
-                            //Separator:
-                            const VerticalDivider(
-                              color: Color.fromRGBO(
-                                  156, 212, 207, 1), //color of divider
-                              width: 15, //width space of divider
-                              thickness: 1, //thickness of divier line
-                              indent: 10, //Spacing at the top of divider.
-                              endIndent: 10, //Spacing at the bottom of divider.
-                            ),
-                            //second column in the first row of the outermost container
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Expanded(
-                                      child: Column(children: [
-                                    Text(
-                                      "GENERATORS",
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(156, 212, 207, 1),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                      ),
+                          ),
+                          //Separator:
+                          const VerticalDivider(
+                            color: Color.fromRGBO(
+                                156, 212, 207, 1), //color of divider
+                            width: 15, //width space of divider
+                            thickness: 1, //thickness of divier line
+                            indent: 10, //Spacing at the top of divider.
+                            endIndent: 10, //Spacing at the bottom of divider.
+                          ),
+                          //second column in the first row of the outermost container
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Expanded(
+                                    child: Column(children: [
+                                  Text(
+                                    "GENERATORS",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(156, 212, 207, 1),
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
                                     ),
-                                    Text(
-                                      "POWER, FT3/SEC",
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(156, 212, 207, 1),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                      ),
+                                  ),
+                                  Text(
+                                    "POWER, FT3/SEC",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(156, 212, 207, 1),
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
                                     ),
-                                  ])),
-                                  //row for icon and number
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                          margin:
-                                              const EdgeInsets.only(right: 5),
-                                          child: const Icon(
-                                            Icons.bolt,
+                                  ),
+                                ])),
+                                //row for icon and number
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                        margin: const EdgeInsets.only(right: 5),
+                                        child: const Icon(
+                                          Icons.bolt,
+                                          color:
+                                              Color.fromRGBO(156, 212, 207, 1),
+                                        )),
+                                    const Text("11,353",
+                                        style: TextStyle(
                                             color: Color.fromRGBO(
-                                                156, 212, 207, 1),
-                                          )),
-                                      const Text("11,353",
-                                          style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  218, 245, 239, 1),
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 20))
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                                                218, 245, 239, 1),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 20))
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
