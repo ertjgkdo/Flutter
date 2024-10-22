@@ -56,10 +56,8 @@ class _ListItemFormNewState extends State<ListItemFormNew> {
                 onChanged: (value) {
                   currentItem = currentItem.copyWith(description: value);
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Description",
-                  suffixIcon: IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.save)),
                 ),
                 controller: descController,
                 validator: (value) {

@@ -27,10 +27,11 @@ class ListTracker extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 15),
               itemBuilder: (context, index) {
                 return Consumer(builder: (context, ref, child) {
-                  //print(index);
-                  final item = ref
-                      .watch(logListProvider.select((value) => value[index]));
-                  print(item.id);
+                  print(index);
+
+                  final item = ref.watch(logListProvider.select(
+                      (value) => value.length > index ? value[index] : null));
+
                   return ListTile(
                     onTap: () {
                       listController.showForm(context, item: item);
@@ -45,9 +46,9 @@ class ListTracker extends ConsumerWidget {
                             size: 20,
                           )),
                     ),
-                    title: Text("${item.title}"),
-                    subtitle: Text("${item.description}"),
-                    leading: Text("${item.date?.hour}: ${item.date?.minute}"),
+                    title: Text("${item?.title}"),
+                    subtitle: Text("${item?.description}"),
+                    leading: Text("${item?.date?.hour}: ${item?.date?.minute}"),
                   );
                 });
               },
