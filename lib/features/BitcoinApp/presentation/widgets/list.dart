@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:newproject/features/BitcoinApp/presentation/state/state.dart';
+import 'package:newproject/utils/exporter.dart';
 
 class ListTracker extends ConsumerWidget {
   const ListTracker({super.key});
@@ -8,6 +7,7 @@ class ListTracker extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     //final list = ref.watch(listProvider);
+    storage;
     final listLength = ref.watch(logListProvider.select(
       (value) => value.length,
     ));

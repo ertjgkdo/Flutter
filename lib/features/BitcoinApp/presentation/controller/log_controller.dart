@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:newproject/features/BitcoinApp/domain/log_model.dart';
 import 'package:newproject/features/BitcoinApp/presentation/widgets/list_form.dart';
+import 'package:newproject/utils/exporter.dart';
 import 'package:uuid/uuid.dart';
 
 class LogController extends Notifier<List<LogModel>> {
@@ -9,6 +10,7 @@ class LogController extends Notifier<List<LogModel>> {
 
   @override
   List<LogModel> build() {
+    load();
     return [];
   }
 
@@ -22,13 +24,26 @@ class LogController extends Notifier<List<LogModel>> {
     ));
   }
 
-  addItem(BuildContext context, {required LogModel item}) {
+  final key = 'loglist';
+  load() async {
+    final data = await storage.read(key: key);
+    if (data != null) {
+      state = logModelFromJson(data);
+    }
+  }
+
+  store() async {
+    await storage.write(key: key, value: logModelToJson(state));
+  }
+
+  addItem(BuildContext context, {required LogModel item}) async {
     // using cascade and method of list
     bool doesItemExist =
         state.any((existingItem) => existingItem.title == item.title);
     if (!doesItemExist) {
       state = [...state..add(item.copyWith(id: const Uuid().v6()))];
 
+      await store();
       // show success snack bar here using context
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -63,10 +78,11 @@ class LogController extends Notifier<List<LogModel>> {
   updateByIndex(
       {required BuildContext context,
       required int index,
-      required LogModel newValue}) {
+      required LogModel newValue}) async {
 // update
 
     state = [...state..[index] = newValue];
+    await store();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         backgroundColor: Colors.green,
@@ -98,6 +114,7 @@ class LogController extends Notifier<List<LogModel>> {
 
     if (confirm == true) {
       state = [...state..removeAt(index)];
+      await store();
     }
   }
 
