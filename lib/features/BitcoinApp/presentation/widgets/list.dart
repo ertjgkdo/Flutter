@@ -12,6 +12,7 @@ class ListTracker extends ConsumerWidget {
       (value) => value.length,
     ));
     final listController = ref.read(logListProvider.notifier);
+    // listController.jsonConverter();
     // print("UI updated");
     // final errorMessage = ref.watch(errorMessageProvider);
     // final listController = ref.read(listProvider.notifier);

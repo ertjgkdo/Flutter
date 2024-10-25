@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:newproject/features/BitcoinApp/domain/log_model.dart';
@@ -29,6 +31,26 @@ class LogController extends Notifier<List<LogModel>> {
     final data = await storage.read(key: key);
     if (data != null) {
       state = logModelFromJson(data);
+    }
+  }
+
+  jsonConverter() {
+    try {
+      final jsondata = '[{"title": "Hello"}, {"title":"Hi"}]';
+      // List<Map<String, dynamic>> data = json.decode(jsondata);
+
+      final data = json.decode(jsondata);
+
+      print(data);
+      // print(data[0]["title"]);
+
+      final value = List<LogModel>.from(
+          data.map((item) => LogModel(title: item["title"])));
+      print(value);
+
+      print(json.encode(value[0].toJson()));
+    } catch (e, s) {
+      print("$e $s");
     }
   }
 
