@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newproject/features/BitcoinApp/domain/transaction_model.dart';
 import 'package:newproject/features/BitcoinApp/domain/user_model.dart';
 import 'package:newproject/features/BitcoinApp/presentation/widgets/home.dart';
+import 'package:newproject/features/BitcoinApp/presentation/widgets/movie_list.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/specs_model.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/user_model.dart';
 import 'package:newproject/features/HardwareMobileApp/presentation/widgets/hardware_app.dart';
@@ -231,6 +232,12 @@ class Screens extends StatelessWidget {
                         snsUser
                       ]),
                 )),
+            buildItem(context,
+                title: "Columns first task",
+                subtitle: "List tile like structure with rows and columns",
+                icon: Icons.add_box,
+                number: 3,
+                widget: const MovieList()),
           ],
         ),
       ),
