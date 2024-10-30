@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:newproject/features/BitcoinApp/domain/log_model.dart';
-import 'package:newproject/features/BitcoinApp/domain/movie_model.dart';
-import 'package:newproject/features/BitcoinApp/presentation/controller/async_list_controller.dart';
+import 'package:newproject/features/MovieScreen/domain/movie_model.dart';
+import 'package:newproject/features/MovieScreen/presentation/controller/async_list_controller.dart';
 import 'package:newproject/features/BitcoinApp/presentation/controller/list_controller.dart';
 import 'package:newproject/features/BitcoinApp/presentation/controller/log_controller.dart';
 
@@ -14,7 +14,3 @@ final logListProvider =
     NotifierProvider<LogController, List<LogModel>>(LogController.new);
 final listProvider =
     NotifierProvider<ListController, List<String>>(ListController.new);
-
-final movieListProvider =
-    AsyncNotifierProvider<MovieListController, List<MovieModel>>(
-        MovieListController.new);

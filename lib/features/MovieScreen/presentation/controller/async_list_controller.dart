@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:http/http.dart';
-import 'package:newproject/features/BitcoinApp/domain/movie_model.dart';
+import 'package:newproject/features/MovieScreen/domain/movie_model.dart';
 import 'package:newproject/utils/exporter.dart';
 // https://my-json-server.typicode.com/horizon-code-academy/fake-movies-api/movies
 

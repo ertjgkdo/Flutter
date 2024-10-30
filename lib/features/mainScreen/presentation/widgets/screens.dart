@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:newproject/features/BitcoinApp/domain/transaction_model.dart';
 import 'package:newproject/features/BitcoinApp/domain/user_model.dart';
 import 'package:newproject/features/BitcoinApp/presentation/widgets/home.dart';
-import 'package:newproject/features/BitcoinApp/presentation/widgets/movie_list.dart';
+import 'package:newproject/features/MovieScreen/presentation/widgets/movie_list.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/specs_model.dart';
 import 'package:newproject/features/HardwareMobileApp/domain/user_model.dart';
 import 'package:newproject/features/HardwareMobileApp/presentation/widgets/hardware_app.dart';
+import 'package:newproject/features/News%20Screen/presentation/widgets/news_list.dart';
 import 'package:newproject/features/ProfileScreen/domain/posts_model.dart';
 import 'package:newproject/features/ProfileScreen/domain/users_model.dart';
 import 'package:newproject/features/ProfileScreen/presentation/widgets/profile.dart';
@@ -233,11 +234,17 @@ class Screens extends StatelessWidget {
                       ]),
                 )),
             buildItem(context,
-                title: "Columns first task",
-                subtitle: "List tile like structure with rows and columns",
+                title: "Movie List",
+                subtitle: "Getting data from an api and displaying",
                 icon: Icons.add_box,
                 number: 3,
                 widget: const MovieList()),
+            buildItem(context,
+                title: "Movie List",
+                subtitle: "Getting data from an api and displaying",
+                icon: Icons.add_box,
+                number: 3,
+                widget: const NewsList()),
           ],
         ),
       ),

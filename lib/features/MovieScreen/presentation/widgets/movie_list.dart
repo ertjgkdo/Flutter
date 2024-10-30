@@ -1,5 +1,5 @@
-import 'package:newproject/features/BitcoinApp/domain/movie_model.dart';
-import 'package:newproject/features/BitcoinApp/presentation/state/state.dart';
+import 'package:newproject/features/MovieScreen/domain/movie_model.dart';
+import 'package:newproject/features/MovieScreen/presentation/state/state.dart';
 import 'package:newproject/utils/exporter.dart';
 
 class MovieList extends ConsumerWidget {
