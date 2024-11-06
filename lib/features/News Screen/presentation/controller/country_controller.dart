@@ -1,6 +1,6 @@
 import 'package:newproject/utils/exporter.dart';
 
-class CountryController extends Notifier<String> {
+class CountryController extends Notifier<String?> {
   final List<String> countries = ["np", "us", "in"];
 
   @override

@@ -10,6 +10,8 @@ import 'package:newproject/features/News%20Screen/presentation/widgets/news_list
 import 'package:newproject/features/ProfileScreen/domain/posts_model.dart';
 import 'package:newproject/features/ProfileScreen/domain/users_model.dart';
 import 'package:newproject/features/ProfileScreen/presentation/widgets/profile.dart';
+import 'package:newproject/features/Recipe%20Screen/domain/recipe_model.dart';
+import 'package:newproject/features/Recipe%20Screen/presentation/widgets/recipe_list.dart';
 import 'package:newproject/features/rowColumns/presentation/widgets/columns.dart';
 import 'package:newproject/features/ChallengeBox/presentation/widgets/challengebox.dart';
 import 'package:newproject/features/ChallengeBox/presentation/widgets/task.dart';
@@ -240,11 +242,19 @@ class Screens extends StatelessWidget {
                 number: 3,
                 widget: const MovieList()),
             buildItem(context,
-                title: "Movie List",
-                subtitle: "Getting data from an api and displaying",
+                title: "News List",
+                subtitle:
+                    "Getting data from an api and displaying, with data filtering options",
                 icon: Icons.add_box,
                 number: 3,
                 widget: const NewsList()),
+            buildItem(context,
+                title: "Recipe List",
+                subtitle:
+                    "Getting data from an api and displaying, with data filtering options",
+                icon: Icons.add_box,
+                number: 3,
+                widget: const RecipeList()),
           ],
         ),
       ),

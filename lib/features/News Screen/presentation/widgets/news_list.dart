@@ -16,37 +16,40 @@ class NewsList extends ConsumerWidget {
         print(news.news!.length);
         return Column(
           children: [
-            Row(
-              children: [
-                Consumer(builder: (context, ref, child) {
-                  final category = ref.watch(categoryProvider);
-                  final categoryController =
-                      ref.read(categoryProvider.notifier);
-                  final categories = categoryController.categories;
-                  return DropdownMenu(
-                      initialSelection: category,
-                      onSelected: (value) =>
-                          categoryController.selectCategory(value!),
-                      dropdownMenuEntries: categories
-                          .map((cat) =>
-                              DropdownMenuEntry(value: cat, label: cat))
-                          .toList());
-                }),
-                Consumer(builder: (context, ref, child) {
-                  final country = ref.watch(countryProvider);
-                  final countryController = ref.read(countryProvider.notifier);
-                  final countries = countryController.countries;
-                  return DropdownMenu(
-                      initialSelection: country,
-                      onSelected: (value) =>
-                          countryController.selectCountry(value!),
-                      dropdownMenuEntries: countries
-                          .map((cat) =>
-                              DropdownMenuEntry(value: cat, label: cat))
-                          .toList());
-                })
-              ],
-            ),
+            Row(children: [
+              Consumer(builder: (context, ref, child) {
+                final category = ref.watch(categoryProvider);
+                final categoryController = ref.read(categoryProvider.notifier);
+                final categories = categoryController.categories;
+                return DropdownMenu(
+                    initialSelection: category,
+                    onSelected: (value) =>
+                        categoryController.selectCategory(value!),
+                    dropdownMenuEntries: categories
+                        .map((cat) => DropdownMenuEntry(value: cat, label: cat))
+                        .toList());
+              }),
+              Consumer(builder: (context, ref, child) {
+                final country = ref.watch(countryProvider);
+                final countryController = ref.read(countryProvider.notifier);
+                final countries = countryController.countries;
+                return DropdownMenu(
+                    initialSelection: country,
+                    onSelected: (value) =>
+                        countryController.selectCountry(value!),
+                    dropdownMenuEntries: countries
+                        .map((cat) => DropdownMenuEntry(value: cat, label: cat))
+                        .toList());
+              }),
+              Expanded(
+                child: IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: () {
+                    newsController.refresh();
+                  },
+                ),
+              ),
+            ]),
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index) {

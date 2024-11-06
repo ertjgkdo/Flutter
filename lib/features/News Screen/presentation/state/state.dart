@@ -8,6 +8,6 @@ final newsListProvider = AsyncNotifierProvider<NewsListController, NewsModel>(
     NewsListController.new);
 
 final categoryProvider =
-    NotifierProvider<CategoryController, String>(CategoryController.new);
+    NotifierProvider<CategoryController, String?>(CategoryController.new);
 final countryProvider =
-    NotifierProvider<CountryController, String>(CountryController.new);
+    NotifierProvider<CountryController, String?>(CountryController.new);

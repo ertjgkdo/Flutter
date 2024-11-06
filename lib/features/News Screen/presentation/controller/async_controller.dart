@@ -36,6 +36,7 @@ class NewsListController extends AsyncNotifier<NewsModel> {
   }
 
   refresh() async {
+    // state = const AsyncLoading();
     state = await AsyncValue.guard(() => load());
   }
 }

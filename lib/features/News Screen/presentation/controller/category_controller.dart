@@ -1,6 +1,6 @@
 import 'package:newproject/utils/exporter.dart';
 
-class CategoryController extends Notifier<String> {
+class CategoryController extends Notifier<String?> {
   final List<String> categories = [
     "business",
     "crime",
@@ -28,6 +28,6 @@ class CategoryController extends Notifier<String> {
   }
 
   selectCategory(String? category) {
-    state = category!;
+    state = category;
   }
 }
