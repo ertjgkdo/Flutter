@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:newproject/features/Recipe%20Screen/presentation/state/state.dart';
 import 'package:newproject/utils/exporter.dart';
 
@@ -10,71 +9,172 @@ class RecipeList extends ConsumerWidget {
     final recipeProvider = ref.watch(recipeListProvider);
     final recipeController = ref.read(recipeListProvider);
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Recipes"),
+      ),
       body: recipeProvider.when(
         data: (recipes) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                Expanded(
-                  child: Consumer(builder: (context, ref, child) {
-                    final cuisine = ref.watch(cuisineProvider);
-                    final cuisineController =
-                        ref.read(cuisineProvider.notifier);
-                    final cuisines = cuisineController.cuisines;
-                    return DropdownMenu(
-                        menuHeight: 200,
-                        label: Text("Cuisine"),
-                        initialSelection: cuisine,
-                        onSelected: (value) =>
-                            cuisineController.selectCuisine(value!),
-                        dropdownMenuEntries: cuisines
-                            .map((items) =>
-                                DropdownMenuEntry(value: items, label: items))
-                            .toList());
-                  }),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 15, top: 10),
+                    child: const Text(
+                      "Filters",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  Container(
+                      margin: const EdgeInsets.only(left: 5, top: 10),
+                      child: const Icon(Icons.filter_alt))
+                ],
+              ),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: Consumer(builder: (context, ref, child) {
+                          final cuisine = ref.watch(cuisineProvider);
+                          final cuisineController =
+                              ref.read(cuisineProvider.notifier);
+                          final cuisines = cuisineController.cuisines;
+                          return DropdownMenu(
+                              menuHeight: 200,
+                              label: const Text(
+                                "Select Cuisine",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              initialSelection: cuisine,
+                              onSelected: (value) =>
+                                  cuisineController.selectCuisine(value!),
+                              dropdownMenuEntries: cuisines
+                                  .map((items) => DropdownMenuEntry(
+                                      value: items, label: items))
+                                  .toList());
+                        }),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: Consumer(builder: (context, ref, child) {
+                          final sort = ref.watch(sortProvider);
+                          final sortController =
+                              ref.read(sortProvider.notifier);
+                          final sortOptions = sortController.sort;
+                          return DropdownMenu(
+                              menuHeight: 200,
+                              label: const Text(
+                                "Sort by",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              initialSelection: sort,
+                              onSelected: (value) =>
+                                  sortController.selectSort(value!),
+                              dropdownMenuEntries: sortOptions
+                                  .map((sort) => DropdownMenuEntry(
+                                      value: sort, label: sort))
+                                  .toList());
+                        }),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: Consumer(builder: (context, ref, child) {
+                          final intolerance = ref.watch(intoleranceProvider);
+                          final intoleranceController =
+                              ref.read(intoleranceProvider.notifier);
+                          final intolerances =
+                              intoleranceController.intolerances;
+                          return DropdownMenu(
+                              menuHeight: 200,
+                              label: const Text(
+                                "Intolerances",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              initialSelection: intolerance,
+                              onSelected: (value) => intoleranceController
+                                  .selectIntolerance(value!),
+                              dropdownMenuEntries: intolerances
+                                  .map((item) => DropdownMenuEntry(
+                                      value: item, label: item))
+                                  .toList());
+                        }),
+                      ),
+                      const Divider(
+                        thickness: 1,
+                        color: Color.fromARGB(255, 113, 110, 110),
+                      ),
+                      Text("${recipes.totalResults} results"),
+                      Expanded(
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // Three items per row
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: 1, // Square shape
+                          ),
+                          itemBuilder: (context, index) {
+                            final singleRecipe = recipes.recipe![index];
+
+                            return Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 5,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 8),
+                              child: Column(children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: Container(
+                                      height: 100,
+                                      margin: const EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(8)),
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                singleRecipe.image!,
+                                              ),
+                                              fit: BoxFit.cover))),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Text(
+                                      "${singleRecipe.title}",
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: 1,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ]),
+                            );
+                          },
+                          itemCount: recipes.recipe!.length,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-                Expanded(
-                  child: Consumer(builder: (context, ref, child) {
-                    final sort = ref.watch(sortProvider);
-                    final sortController = ref.read(sortProvider.notifier);
-                    final sortOptions = sortController.sort;
-                    return DropdownMenu(
-                        label: Text("Sort by"),
-                        initialSelection: sort,
-                        onSelected: (value) =>
-                            sortController.selectSort(value!),
-                        dropdownMenuEntries: sortOptions
-                            .map((sort) =>
-                                DropdownMenuEntry(value: sort, label: sort))
-                            .toList());
-                  }),
-                ),
-                Expanded(
-                  child: Consumer(builder: (context, ref, child) {
-                    final intolerance = ref.watch(intoleranceProvider);
-                    final intoleranceController =
-                        ref.read(intoleranceProvider.notifier);
-                    final intolerances = intoleranceController.intolerances;
-                    return DropdownMenu(
-                        label: Text("Intolerances"),
-                        initialSelection: intolerance,
-                        onSelected: (value) =>
-                            intoleranceController.selectIntolerance(value!),
-                        dropdownMenuEntries: intolerances
-                            .map((item) =>
-                                DropdownMenuEntry(value: item, label: item))
-                            .toList());
-                  }),
-                ),
-              ]),
-              Divider(),
+              ),
             ],
           );
         },
         error: (error, stackTrace) => Container(
           child: Text(error.toString()),
         ),
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
     );
   }

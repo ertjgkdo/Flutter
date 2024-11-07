@@ -36,16 +36,17 @@ class RecipeModel {
       );
 
   factory RecipeModel.fromJson(Map<String, dynamic> json) => RecipeModel(
-        recipe: json["recipe"] == null
+        recipe: json["results"] == null
             ? []
-            : List<Recipe>.from(json["recipe"]!.map((x) => Recipe.fromJson(x))),
+            : List<Recipe>.from(
+                json["results"]!.map((x) => Recipe.fromJson(x))),
         offset: json["offset"],
         number: json["number"],
         totalResults: json["totalResults"],
       );
 
   Map<String, dynamic> toJson() => {
-        "recipe": recipe == null
+        "results": recipe == null
             ? []
             : List<dynamic>.from(recipe!.map((x) => x.toJson())),
         "offset": offset,
