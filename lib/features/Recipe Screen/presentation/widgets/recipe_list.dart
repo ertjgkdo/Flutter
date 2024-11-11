@@ -122,43 +122,49 @@ class RecipeList extends ConsumerWidget {
                           itemBuilder: (context, index) {
                             final singleRecipe = recipes.recipe![index];
 
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 5,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 8),
-                              child: Column(children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                      height: 100,
-                                      margin: const EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(8)),
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                singleRecipe.image!,
-                                              ),
-                                              fit: BoxFit.cover))),
+                            return GestureDetector(
+                              onTap: () {
+                                print(singleRecipe.id);
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Text(
-                                      "${singleRecipe.title}",
-                                      style: const TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: 1,
+                                elevation: 5,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 8),
+                                child: Column(children: [
+                                  Expanded(
+                                    flex: 3,
+                                    child: Container(
+                                        height: 100,
+                                        margin: const EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(8)),
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                  singleRecipe.image!,
+                                                ),
+                                                fit: BoxFit.cover))),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Text(
+                                        "${singleRecipe.title}",
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 1,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ]),
+                                  )
+                                ]),
+                              ),
                             );
                           },
                           itemCount: recipes.recipe!.length,

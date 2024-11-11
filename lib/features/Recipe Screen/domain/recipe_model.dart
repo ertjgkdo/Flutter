@@ -3,6 +3,7 @@
 //     final recipeModel = recipeModelFromJson(jsonString);
 
 import 'dart:convert';
+import 'recipe.dart';
 
 RecipeModel recipeModelFromJson(String str) =>
     RecipeModel.fromJson(json.decode(str));
@@ -53,61 +54,4 @@ class RecipeModel {
         "number": number,
         "totalResults": totalResults,
       };
-}
-
-class Recipe {
-  final int? id;
-  final String? title;
-  final String? image;
-  final ImageType? imageType;
-
-  Recipe({
-    this.id,
-    this.title,
-    this.image,
-    this.imageType,
-  });
-
-  Recipe copyWith({
-    int? id,
-    String? title,
-    String? image,
-    ImageType? imageType,
-  }) =>
-      Recipe(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        image: image ?? this.image,
-        imageType: imageType ?? this.imageType,
-      );
-
-  factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
-        id: json["id"],
-        title: json["title"],
-        image: json["image"],
-        imageType: imageTypeValues.map[json["imageType"]]!,
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "image": image,
-        "imageType": imageTypeValues.reverse[imageType],
-      };
-}
-
-enum ImageType { JPG }
-
-final imageTypeValues = EnumValues({"jpg": ImageType.JPG});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }
