@@ -1,6 +1,8 @@
 import 'package:newproject/features/Recipe%20Screen/presentation/state/state.dart';
 import 'package:newproject/utils/exporter.dart';
 
+import 'recipe_detail.dart';
+
 class RecipeList extends ConsumerWidget {
   const RecipeList({super.key});
 
@@ -124,7 +126,12 @@ class RecipeList extends ConsumerWidget {
 
                             return GestureDetector(
                               onTap: () {
-                                print(singleRecipe.id);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RecipeDetail(),
+                                  ),
+                                );
                               },
                               child: Card(
                                 shape: RoundedRectangleBorder(

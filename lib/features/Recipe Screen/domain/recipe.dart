@@ -1,11 +1,6 @@
-// To parse this JSON data, do
-//
-//     final recipe = recipeFromJson(jsonString);
-
 import 'dart:convert';
 
 Recipe recipeFromJson(String str) => Recipe.fromJson(json.decode(str));
-
 String recipeToJson(Recipe data) => json.encode(data.toJson());
 
 class Recipe {
@@ -22,7 +17,7 @@ class Recipe {
   final String? sourceUrl;
   final String? spoonacularSourceUrl;
   final int? healthScore;
-  final int? spoonacularScore;
+  final double? spoonacularScore;
   final double? pricePerServing;
   final List<dynamic>? analyzedInstructions;
   final bool? cheap;
@@ -89,88 +84,6 @@ class Recipe {
     this.winePairing,
   });
 
-  Recipe copyWith({
-    int? id,
-    String? title,
-    String? image,
-    String? imageType,
-    int? servings,
-    int? readyInMinutes,
-    int? cookingMinutes,
-    int? preparationMinutes,
-    String? license,
-    String? sourceName,
-    String? sourceUrl,
-    String? spoonacularSourceUrl,
-    int? healthScore,
-    int? spoonacularScore,
-    double? pricePerServing,
-    List<dynamic>? analyzedInstructions,
-    bool? cheap,
-    String? creditsText,
-    List<dynamic>? cuisines,
-    bool? dairyFree,
-    List<dynamic>? diets,
-    String? gaps,
-    bool? glutenFree,
-    String? instructions,
-    bool? ketogenic,
-    bool? lowFodmap,
-    List<dynamic>? occasions,
-    bool? sustainable,
-    bool? vegan,
-    bool? vegetarian,
-    bool? veryHealthy,
-    bool? veryPopular,
-    bool? whole30,
-    int? weightWatcherSmartPoints,
-    List<String>? dishTypes,
-    List<ExtendedIngredient>? extendedIngredients,
-    String? summary,
-    WinePairing? winePairing,
-  }) =>
-      Recipe(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        image: image ?? this.image,
-        imageType: imageType ?? this.imageType,
-        servings: servings ?? this.servings,
-        readyInMinutes: readyInMinutes ?? this.readyInMinutes,
-        cookingMinutes: cookingMinutes ?? this.cookingMinutes,
-        preparationMinutes: preparationMinutes ?? this.preparationMinutes,
-        license: license ?? this.license,
-        sourceName: sourceName ?? this.sourceName,
-        sourceUrl: sourceUrl ?? this.sourceUrl,
-        spoonacularSourceUrl: spoonacularSourceUrl ?? this.spoonacularSourceUrl,
-        healthScore: healthScore ?? this.healthScore,
-        spoonacularScore: spoonacularScore ?? this.spoonacularScore,
-        pricePerServing: pricePerServing ?? this.pricePerServing,
-        analyzedInstructions: analyzedInstructions ?? this.analyzedInstructions,
-        cheap: cheap ?? this.cheap,
-        creditsText: creditsText ?? this.creditsText,
-        cuisines: cuisines ?? this.cuisines,
-        dairyFree: dairyFree ?? this.dairyFree,
-        diets: diets ?? this.diets,
-        gaps: gaps ?? this.gaps,
-        glutenFree: glutenFree ?? this.glutenFree,
-        instructions: instructions ?? this.instructions,
-        ketogenic: ketogenic ?? this.ketogenic,
-        lowFodmap: lowFodmap ?? this.lowFodmap,
-        occasions: occasions ?? this.occasions,
-        sustainable: sustainable ?? this.sustainable,
-        vegan: vegan ?? this.vegan,
-        vegetarian: vegetarian ?? this.vegetarian,
-        veryHealthy: veryHealthy ?? this.veryHealthy,
-        veryPopular: veryPopular ?? this.veryPopular,
-        whole30: whole30 ?? this.whole30,
-        weightWatcherSmartPoints:
-            weightWatcherSmartPoints ?? this.weightWatcherSmartPoints,
-        dishTypes: dishTypes ?? this.dishTypes,
-        extendedIngredients: extendedIngredients ?? this.extendedIngredients,
-        summary: summary ?? this.summary,
-        winePairing: winePairing ?? this.winePairing,
-      );
-
   factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
         id: json["id"],
         title: json["title"],
@@ -185,7 +98,7 @@ class Recipe {
         sourceUrl: json["sourceUrl"],
         spoonacularSourceUrl: json["spoonacularSourceUrl"],
         healthScore: json["healthScore"],
-        spoonacularScore: json["spoonacularScore"],
+        spoonacularScore: json["spoonacularScore"]?.toDouble(),
         pricePerServing: json["pricePerServing"]?.toDouble(),
         analyzedInstructions: json["analyzedInstructions"] == null
             ? []
@@ -305,38 +218,11 @@ class ExtendedIngredient {
     this.unit,
   });
 
-  ExtendedIngredient copyWith({
-    String? aisle,
-    double? amount,
-    Consistency? consistency,
-    int? id,
-    String? image,
-    Measures? measures,
-    List<String>? meta,
-    String? name,
-    String? original,
-    String? originalName,
-    String? unit,
-  }) =>
-      ExtendedIngredient(
-        aisle: aisle ?? this.aisle,
-        amount: amount ?? this.amount,
-        consistency: consistency ?? this.consistency,
-        id: id ?? this.id,
-        image: image ?? this.image,
-        measures: measures ?? this.measures,
-        meta: meta ?? this.meta,
-        name: name ?? this.name,
-        original: original ?? this.original,
-        originalName: originalName ?? this.originalName,
-        unit: unit ?? this.unit,
-      );
-
   factory ExtendedIngredient.fromJson(Map<String, dynamic> json) =>
       ExtendedIngredient(
         aisle: json["aisle"],
         amount: json["amount"]?.toDouble(),
-        consistency: consistencyValues.map[json["consistency"]]!,
+        consistency: consistencyValues.map[json["consistency"]],
         id: json["id"],
         image: json["image"],
         measures: json["measures"] == null
@@ -380,15 +266,6 @@ class Measures {
     this.us,
   });
 
-  Measures copyWith({
-    Metric? metric,
-    Metric? us,
-  }) =>
-      Measures(
-        metric: metric ?? this.metric,
-        us: us ?? this.us,
-      );
-
   factory Measures.fromJson(Map<String, dynamic> json) => Measures(
         metric: json["metric"] == null ? null : Metric.fromJson(json["metric"]),
         us: json["us"] == null ? null : Metric.fromJson(json["us"]),
@@ -410,17 +287,6 @@ class Metric {
     this.unitLong,
     this.unitShort,
   });
-
-  Metric copyWith({
-    double? amount,
-    String? unitLong,
-    String? unitShort,
-  }) =>
-      Metric(
-        amount: amount ?? this.amount,
-        unitLong: unitLong ?? this.unitLong,
-        unitShort: unitShort ?? this.unitShort,
-      );
 
   factory Metric.fromJson(Map<String, dynamic> json) => Metric(
         amount: json["amount"]?.toDouble(),
@@ -445,17 +311,6 @@ class WinePairing {
     this.pairingText,
     this.productMatches,
   });
-
-  WinePairing copyWith({
-    List<String>? pairedWines,
-    String? pairingText,
-    List<ProductMatch>? productMatches,
-  }) =>
-      WinePairing(
-        pairedWines: pairedWines ?? this.pairedWines,
-        pairingText: pairingText ?? this.pairingText,
-        productMatches: productMatches ?? this.productMatches,
-      );
 
   factory WinePairing.fromJson(Map<String, dynamic> json) => WinePairing(
         pairedWines: json["pairedWines"] == null
@@ -486,8 +341,8 @@ class ProductMatch {
   final String? price;
   final String? imageUrl;
   final double? averageRating;
-  final int? ratingCount;
-  final double? score;
+  final double? ratingCount;
+  final String? score;
   final String? link;
 
   ProductMatch({
@@ -502,29 +357,6 @@ class ProductMatch {
     this.link,
   });
 
-  ProductMatch copyWith({
-    int? id,
-    String? title,
-    String? description,
-    String? price,
-    String? imageUrl,
-    double? averageRating,
-    int? ratingCount,
-    double? score,
-    String? link,
-  }) =>
-      ProductMatch(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        description: description ?? this.description,
-        price: price ?? this.price,
-        imageUrl: imageUrl ?? this.imageUrl,
-        averageRating: averageRating ?? this.averageRating,
-        ratingCount: ratingCount ?? this.ratingCount,
-        score: score ?? this.score,
-        link: link ?? this.link,
-      );
-
   factory ProductMatch.fromJson(Map<String, dynamic> json) => ProductMatch(
         id: json["id"],
         title: json["title"],
@@ -532,8 +364,8 @@ class ProductMatch {
         price: json["price"],
         imageUrl: json["imageUrl"],
         averageRating: json["averageRating"]?.toDouble(),
-        ratingCount: json["ratingCount"],
-        score: json["score"]?.toDouble(),
+        ratingCount: json["ratingCount"]?.toDouble(),
+        score: json["score"],
         link: json["link"],
       );
 
@@ -551,8 +383,8 @@ class ProductMatch {
 }
 
 class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
+  final Map<String, T> map;
+  late final Map<T, String> reverseMap;
 
   EnumValues(this.map);
 
