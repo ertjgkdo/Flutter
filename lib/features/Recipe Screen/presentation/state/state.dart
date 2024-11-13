@@ -9,13 +9,16 @@ import 'package:newproject/utils/exporter.dart';
 import '../../domain/recipe.dart';
 
 final recipeListProvider =
-    AsyncNotifierProvider<RecipeController, RecipeModel>(RecipeController.new);
+    AsyncNotifierProvider.autoDispose<RecipeController, RecipeModel>(
+        RecipeController.new);
 
 final recipeDetailProvider =
-    AsyncNotifierProvider<SingleRecipeController, Recipe>(
+    AsyncNotifierProvider.family<SingleRecipeController, Recipe, int>(
         SingleRecipeController.new);
+
 final cuisineProvider =
-    NotifierProvider<CuisineController, String?>(CuisineController.new);
+    NotifierProvider.autoDispose<CuisineController, String?>(
+        CuisineController.new);
 
 final intoleranceProvider = NotifierProvider<IntolerancesController, String?>(
     IntolerancesController.new);

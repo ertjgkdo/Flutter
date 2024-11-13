@@ -129,7 +129,9 @@ class RecipeList extends ConsumerWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => RecipeDetail(),
+                                    builder: (context) => RecipeDetail(
+                                      recipe: singleRecipe,
+                                    ),
                                   ),
                                 );
                               },

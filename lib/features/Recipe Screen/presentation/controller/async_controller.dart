@@ -6,7 +6,7 @@ import 'package:newproject/utils/exporter.dart';
 
 import '../../domain/recipe_model.dart';
 
-class RecipeController extends AsyncNotifier<RecipeModel> {
+class RecipeController extends AutoDisposeAsyncNotifier<RecipeModel> {
   final client = Client();
   @override
   FutureOr<RecipeModel> build() {

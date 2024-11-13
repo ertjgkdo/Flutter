@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:newproject/features/Recipe%20Screen/domain/recipe.dart';
 import 'package:newproject/features/Recipe%20Screen/presentation/state/state.dart';
 import 'package:newproject/utils/exporter.dart';
 
 class RecipeDetail extends ConsumerWidget {
-  const RecipeDetail({super.key});
-
+  const RecipeDetail({super.key, required this.recipe});
+  final Recipe recipe;
   @override
   Widget build(BuildContext context, ref) {
-    final singleRecipeProvider = ref.watch(recipeDetailProvider);
-    final singleRecipeController = ref.read(recipeDetailProvider.notifier);
+    final recipeProvider = recipeDetailProvider(recipe.id!);
+    final singleRecipeProvider = ref.watch(recipeProvider);
+    final singleRecipeController = ref.read(recipeProvider.notifier);
     return Scaffold(
         body: singleRecipeProvider.when(
             data: (details) {
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              return RefreshIndicator(
+                onRefresh: () {
+                  // ref.invalidate(recipeProvider);
+                  // return Future.value();
+                  return singleRecipeController.refresh(recipe.id!);
+                },
+                child: ListView(
                   children: [
                     Stack(
                       children: [
@@ -129,7 +135,8 @@ class RecipeDetail extends ConsumerWidget {
                                     i++)
                                   eachIngredients(
                                       image: details
-                                          .extendedIngredients![i].image!,
+                                              .extendedIngredients![i].image ??
+                                          "",
                                       name:
                                           details.extendedIngredients![i].name!,
                                       quantity: details
@@ -175,7 +182,8 @@ class RecipeDetail extends ConsumerWidget {
                                           fontSize: 15),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.symmetric(vertical: 8),
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 8),
                                       child: Text(
                                         "${step["step"]}",
                                         style: const TextStyle(
@@ -205,24 +213,46 @@ class RecipeDetail extends ConsumerWidget {
   Column eachIngredients(
       {required String image, required String name, required quantity}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              image: DecorationImage(
-                  image: NetworkImage(image), fit: BoxFit.cover)),
-          margin: const EdgeInsets.only(right: 15, bottom: 5),
-          height: 70,
-          width: 70,
+        Expanded(
+          flex: 3,
+          child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              // image: DecorationImage(onError: (exception, stackTrace) {
+
+              // },
+              //     image: NetworkImage(image), fit: BoxFit.cover)
+            ),
+            margin: const EdgeInsets.only(right: 15, bottom: 5),
+            height: 70,
+            width: 70,
+            child: Image.network(
+              image,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(Icons.set_meal_outlined);
+              },
+            ),
+          ),
         ),
-        Text(
-          name,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+        Expanded(
+          flex: 2,
+          child: SizedBox(
+            width: 90,
+            child: Text(
+              name,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
         ),
-        Text(
-          "${quantity.toString()} items",
-          style: const TextStyle(color: Color.fromARGB(202, 104, 102, 102)),
+        Expanded(
+          child: Text(
+            "${quantity.toString()} items",
+            style: const TextStyle(color: Color.fromARGB(202, 104, 102, 102)),
+          ),
         )
       ],
     );

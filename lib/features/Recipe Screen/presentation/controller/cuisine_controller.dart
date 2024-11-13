@@ -1,6 +1,6 @@
 import 'package:newproject/utils/exporter.dart';
 
-class CuisineController extends Notifier<String?> {
+class CuisineController extends AutoDisposeNotifier<String?> {
   final List<String> cuisines = [
     'African',
     'Asian',
