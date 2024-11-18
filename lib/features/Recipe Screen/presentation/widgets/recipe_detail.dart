@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:newproject/features/Recipe%20Screen/domain/recipe.dart';
 import 'package:newproject/features/Recipe%20Screen/presentation/state/state.dart';
 import 'package:newproject/utils/exporter.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RecipeDetail extends ConsumerWidget {
-  const RecipeDetail({super.key, required this.recipe, this.loading = true});
+  const RecipeDetail({super.key, required this.recipe, });
   final Recipe recipe;
-  final bool loading;
+  
   @override
   Widget build(BuildContext context, ref) {
     final recipeProvider = recipeDetailProvider(recipe.id!);
@@ -32,7 +31,7 @@ class RecipeDetail extends ConsumerWidget {
               );
             },
             loading: () => AbsorbPointer(
-                child: listViewUI(Recipe(), context, loading: false))));
+                child: listViewUI(Recipe(), context, loading: true))));
   }
 
   ListView listViewUI(Recipe details, BuildContext context,
@@ -42,7 +41,8 @@ class RecipeDetail extends ConsumerWidget {
         Stack(
           children: [
             loading
-                ? ShimmerBox()
+                ? ShimmerBox(height: 350
+                )
                 : Container(
                     alignment: Alignment.topLeft,
                     width: double.infinity,
@@ -76,7 +76,7 @@ class RecipeDetail extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.only(top: 280, left: 15, right: 15),
-              decoration: const BoxDecoration(
+              decoration: loading?null: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
                       blurRadius: 1,
@@ -88,7 +88,9 @@ class RecipeDetail extends ConsumerWidget {
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               child: Column(
                 children: [
-                  Text(
+                  loading
+                ? ShimmerBox(height: 20)
+                :Text(
                     "${details.title}",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
@@ -96,7 +98,9 @@ class RecipeDetail extends ConsumerWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  Text(
+                  loading
+                ? ShimmerBox(height: 15)
+                :Text(
                     "${details.extendedIngredients?.length} ingredients",
                     style: const TextStyle(
                         color: Color.fromARGB(202, 104, 102, 102)),
@@ -106,14 +110,14 @@ class RecipeDetail extends ConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        recipeSpecs(
+                        recipeSpecs(loading: loading,
                             icon: Icons.timer,
                             specification:
                                 "${details.cookingMinutes ?? " "} min"),
-                        recipeSpecs(
+                        recipeSpecs(loading: loading,
                             specification: "${details.healthScore} H.Score",
                             icon: Icons.local_fire_department_outlined),
-                        recipeSpecs(
+                        recipeSpecs(loading: loading,
                             specification: "${details.servings} servings",
                             icon: Icons.adjust)
                       ],
@@ -124,16 +128,21 @@ class RecipeDetail extends ConsumerWidget {
             )
           ],
         ),
+        Text(DateTime.now().format()),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          child: const Text(
+          child: loading
+                ? ShimmerBox(height: 15)
+                : const Text(
             "Ingredients",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
         ),
         SizedBox(
           height: 130,
-          child: ListView(
+          child: loading
+                ? ShimmerBox()
+                :ListView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.only(left: 20),
             children: [
@@ -153,8 +162,11 @@ class RecipeDetail extends ConsumerWidget {
           ),
         ),
         Container(
-          margin: const EdgeInsets.only(left: 15),
-          child: const Text(
+          margin: const EdgeInsets.only(left: 15,top: 15),
+          child: loading
+                ? ShimmerBox(height: 15
+                )
+                : const Text(
             "Cooking instruction",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
@@ -166,7 +178,9 @@ class RecipeDetail extends ConsumerWidget {
               borderRadius: BorderRadius.all(Radius.circular(15)),
               color: Color.fromRGBO(255, 246, 234, 1)),
           padding: const EdgeInsets.all(20),
-          child: Column(
+          child:loading
+                ? ShimmerBox(height: 200)
+                : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (details.analyzedInstructions != null &&
@@ -224,7 +238,7 @@ class RecipeDetail extends ConsumerWidget {
             child: Image.network(
               image,
               errorBuilder: (context, error, stackTrace) {
-                return Icon(Icons.set_meal_outlined);
+                return const Icon(Icons.set_meal_outlined);
               },
             ),
           ),
@@ -251,10 +265,42 @@ class RecipeDetail extends ConsumerWidget {
     );
   }
 
-  Shimmer ShimmerBox(
+  
+
+  Widget recipeSpecs({required String specification, required IconData icon, bool loading=false}) {
+    return Expanded(
+      child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8),
+          child: Row(children: [
+            Expanded(
+              flex: 1,
+              child: loading
+                ? ShimmerBox(height: 20,width: 8)
+                :Container(
+                child: Icon(
+                  icon,
+                  color: const Color.fromRGBO(250, 169, 47, 1),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: loading
+                ? ShimmerBox(width: 20,height: 20)
+                :Text(
+                specification,
+                style:
+                    const TextStyle(color: Color.fromARGB(202, 104, 102, 102)),
+              ),
+            )
+          ])),
+    );
+  }
+}
+Shimmer ShimmerBox(
       {double? height, double? width, BoxShape shape = BoxShape.rectangle}) {
     return Shimmer.fromColors(
-      baseColor: Color.fromARGB(255, 97, 97, 97),
+      baseColor: const Color.fromARGB(255, 97, 97, 97),
       highlightColor: Colors.grey,
       child: Container(
         height: height,
@@ -266,30 +312,3 @@ class RecipeDetail extends ConsumerWidget {
       ),
     );
   }
-
-  Widget recipeSpecs({required String specification, required IconData icon}) {
-    return Expanded(
-      child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8),
-          child: Row(children: [
-            Expanded(
-              flex: 1,
-              child: Container(
-                child: Icon(
-                  icon,
-                  color: const Color.fromRGBO(250, 169, 47, 1),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                specification,
-                style:
-                    const TextStyle(color: Color.fromARGB(202, 104, 102, 102)),
-              ),
-            )
-          ])),
-    );
-  }
-}
