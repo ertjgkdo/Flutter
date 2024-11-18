@@ -1,5 +1,7 @@
 import 'package:newproject/features/ProfileScreen/domain/posts_model.dart';
 
+import 'posts_model.dart';
+
 class Person {
   final String firstName;
   final String? lastName;
