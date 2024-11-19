@@ -128,7 +128,7 @@ class RecipeDetail extends ConsumerWidget {
             )
           ],
         ),
-        Text(DateTime.now().format()),
+       
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           child: loading
@@ -257,7 +257,7 @@ class RecipeDetail extends ConsumerWidget {
         ),
         Expanded(
           child: Text(
-            "${quantity.toString()} items",
+            "${quantity.formatAmount()} items",
             style: const TextStyle(color: Color.fromARGB(202, 104, 102, 102)),
           ),
         )

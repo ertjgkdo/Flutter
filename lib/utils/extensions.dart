@@ -1,3 +1,4 @@
+
 import 'package:intl/intl.dart';
 
 extension DateTimeFormatter on DateTime{
@@ -6,7 +7,8 @@ extension DateTimeFormatter on DateTime{
   }
 }
 
-// extension DoubleFormatter on Double{
-//   String formatDouble(){
-//     return 
-//   }
+extension DoubleFormatting on double {
+  String formatAmount() {
+    return this % 1 == 0 ? toInt().toString() : toString();
+  }
+}
