@@ -11,7 +11,7 @@ class RecipeList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final recipeProvider = ref.watch(recipeListProvider);
-    final recipeController = ref.read(recipeListProvider);
+    final recipeController = ref.read(recipeListProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Recipes"),

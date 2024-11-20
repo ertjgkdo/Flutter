@@ -13,6 +13,7 @@ import 'package:newproject/features/ProfileScreen/presentation/widgets/profile.d
 import 'package:newproject/features/Recipe%20Screen/domain/recipe_model.dart';
 import 'package:newproject/features/Recipe%20Screen/presentation/widgets/recipe_detail.dart';
 import 'package:newproject/features/Recipe%20Screen/presentation/widgets/recipe_list.dart';
+import 'package:newproject/features/Restaurant/presentation/widgets/restaurant_list.dart';
 import 'package:newproject/features/rowColumns/presentation/widgets/columns.dart';
 import 'package:newproject/features/ChallengeBox/presentation/widgets/challengebox.dart';
 import 'package:newproject/features/ChallengeBox/presentation/widgets/task.dart';
@@ -256,12 +257,12 @@ class Screens extends StatelessWidget {
                 icon: Icons.add_box,
                 number: 3,
                 widget: const RecipeList()),
-            // buildItem(context,
-            //     title: "Recipe Detail UI",
-            //     subtitle: " ",
-            //     icon: Icons.add_box,
-            //     number: 3,
-            //     widget: const RecipeDetail()),
+            buildItem(context,
+                title: "Restaurants",
+                subtitle: "Searching for restaurants ",
+                icon: Icons.add_box,
+                number: 3,
+                widget: const RestaurantList()),
           ],
         ),
       ),
