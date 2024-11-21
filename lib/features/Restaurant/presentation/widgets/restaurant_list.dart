@@ -9,6 +9,8 @@ class RestaurantList extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final restaurantProvider = ref.watch(restaurantListProvider);
     final restaurantController = ref.watch(restaurantListProvider.notifier);
+
+    final TextEditingController searchController = TextEditingController();
     return Scaffold(
         body: restaurantProvider.when(
             data: (restaurantModel) {
@@ -39,12 +41,13 @@ class RestaurantList extends ConsumerWidget {
                     height: 40,
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     child: TextField(
+                      controller: searchController,
                       decoration: InputDecoration(
-                        suffixIcon: Icon(Icons.search),
+                        suffixIcon: IconButton(
+                            onPressed: () {}, icon: Icon(Icons.search)),
                         labelText: 'Search',
                         border: OutlineInputBorder(),
                       ),
-                      onChanged: (value) {},
                     ),
                   ),
                   Expanded(
@@ -96,9 +99,12 @@ class RestaurantList extends ConsumerWidget {
                 ],
               );
             },
-            error: (error, stackTrace) => Container(
-                  child: Text(error.toString()),
-                ),
+            error: (error, stackTrace) {
+              print(stackTrace);
+              return Container(
+                child: Text(error.toString()),
+              );
+            },
             loading: () => Container(child: CircularProgressIndicator())));
   }
 }
