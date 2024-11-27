@@ -4,5 +4,10 @@ import 'package:newproject/features/Restaurant/presentation/controllers/rest_lis
 import '../../../../utils/exporter.dart';
 
 final restaurantListProvider =
-    AsyncNotifierProvider.autoDispose<RestaurantController, RestaurantModel>(
+    AsyncNotifierProvider<RestaurantController, RestaurantModel>(
         RestaurantController.new);
+
+// final restaurantSearchProvider = AsyncNotifierProvider<
+//     RestaurantSearchController,
+//     RestaurantModel,
+//     String>(RestaurantSearchController.new);

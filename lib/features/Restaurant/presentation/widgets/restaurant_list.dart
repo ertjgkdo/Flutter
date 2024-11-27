@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:newproject/features/Restaurant/domain/restaurant_model.dart';
+import 'package:newproject/features/Restaurant/presentation/controllers/rest_list_controller.dart';
+import 'package:newproject/features/Restaurant/presentation/controllers/search_delegate.dart';
 import 'package:newproject/features/Restaurant/presentation/state/state.dart';
+import 'package:newproject/features/Restaurant/presentation/widgets/components/restaurant_list_ui.dart';
 import 'package:newproject/utils/exporter.dart';
 
 class RestaurantList extends ConsumerWidget {
@@ -12,6 +16,7 @@ class RestaurantList extends ConsumerWidget {
 
     final TextEditingController searchController = TextEditingController();
     return Scaffold(
+        appBar: AppBar(),
         body: restaurantProvider.when(
             data: (restaurantModel) {
               final restaurants = restaurantModel.restaurants;
@@ -40,61 +45,29 @@ class RestaurantList extends ConsumerWidget {
                   Container(
                     height: 40,
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    child: TextField(
-                      controller: searchController,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.search)),
-                        labelText: 'Search',
-                        border: OutlineInputBorder(),
+                    child: GestureDetector(
+                      onTap: () async {
+                        await showSearch(
+                            context: context, delegate: CustomSearchDelegate());
+                      },
+                      child: TextField(
+                        enabled: false,
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                restaurantController.searchRestaurants(
+                                    searchController.text.trim());
+                              },
+                              icon: const Icon(Icons.search)),
+                          labelText: 'Search',
+                          border: const OutlineInputBorder(),
+                        ),
                       ),
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: restaurants.length,
-                      itemBuilder: (context, index) {
-                        final restaurant =
-                            restaurants.isNotEmpty ? restaurants[index] : null;
-                        return ListTile(
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                          tileColor:
-                              Colors.white, // Background color for the tile
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          title: Text(
-                            restaurant?.name ?? '',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(255, 59, 66, 83),
-                            ),
-                          ),
-                          subtitle: Text(
-                            restaurant?.type ?? 'Cuisine type here',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          trailing: Text(
-                              restaurant?.isOpen == true
-                                  ? "Open"
-                                  : restaurant?.isOpen == false
-                                      ? "Closed"
-                                      : "Unknown",
-                              style: TextStyle(
-                                  color: restaurant?.isOpen == true
-                                      ? Colors.green
-                                      : restaurant?.isOpen == false
-                                          ? Colors.red
-                                          : Colors.grey)),
-                          onTap: () {},
-                        );
-                      },
-                    ),
+                    child: RestaurantListUI(restaurants: restaurants),
                   ),
                 ],
               );
@@ -105,6 +78,7 @@ class RestaurantList extends ConsumerWidget {
                 child: Text(error.toString()),
               );
             },
-            loading: () => Container(child: CircularProgressIndicator())));
+            loading: () =>
+                Container(child: const CircularProgressIndicator())));
   }
 }
