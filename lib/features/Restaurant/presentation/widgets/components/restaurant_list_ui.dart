@@ -12,10 +12,15 @@ class RestaurantListUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (restaurants.isEmpty) {
+      return const Center(
+        child: Text("We could not find any restaurant."),
+      );
+    }
     return ListView.builder(
       itemCount: restaurants.length,
       itemBuilder: (context, index) {
-        final restaurant = restaurants.isNotEmpty ? restaurants[index] : null;
+        final restaurant = restaurants[index];
         return ListTile(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
@@ -24,7 +29,7 @@ class RestaurantListUI extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           title: Text(
-            restaurant?.name ?? '',
+            restaurant.name ?? '',
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -32,22 +37,22 @@ class RestaurantListUI extends StatelessWidget {
             ),
           ),
           subtitle: Text(
-            restaurant?.type ?? 'Cuisine type here',
+            restaurant.type ?? 'Cuisine type here',
             style: const TextStyle(
               fontSize: 14,
               color: Colors.grey,
             ),
           ),
           trailing: Text(
-              restaurant?.isOpen == true
+              restaurant.isOpen == true
                   ? "Open"
-                  : restaurant?.isOpen == false
+                  : restaurant.isOpen == false
                       ? "Closed"
                       : "Unknown",
               style: TextStyle(
-                  color: restaurant?.isOpen == true
+                  color: restaurant.isOpen == true
                       ? Colors.green
-                      : restaurant?.isOpen == false
+                      : restaurant.isOpen == false
                           ? Colors.red
                           : Colors.grey)),
           onTap: () {},

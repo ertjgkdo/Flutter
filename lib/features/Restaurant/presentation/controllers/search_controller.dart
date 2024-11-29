@@ -15,6 +15,8 @@ class RestaurantSearchController
 
   Future<RestaurantModel> load() async {
     final client = await ref.getDebouncedHttpClient(Duration(seconds: 5));
-    return RestaurantRepository().load(keyword: arg, client: client);
+    return RestaurantRepository().fetchRestaurant(
+      query: arg,
+    );
   }
 }

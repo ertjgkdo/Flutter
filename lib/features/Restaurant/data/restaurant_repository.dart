@@ -28,7 +28,7 @@ class RestaurantRepository extends Repository<RestaurantModel> {
   RestaurantRepository({super.localClient});
   @override
   // TODO: implement endpoint
-  String get endpoint => 'test';
+  // String get endpoint => '';
   @override
   RestaurantModel fromRawJson(String json) => RestaurantModel.fromRawJson(json);
 
@@ -39,6 +39,6 @@ class RestaurantRepository extends Repository<RestaurantModel> {
   Future<RestaurantModel> fetchRestaurant({String? query}) async {
     return await fetch(
         path: "restaurants/search",
-        queries: "lat=37.78129959&lng=-122.38869477");
+        queries: "query=$query&lat=37.78129959&lng=-122.38869477");
   }
 }

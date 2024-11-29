@@ -16,12 +16,10 @@ class RecipeController extends AutoDisposeAsyncNotifier<RecipeModel> {
   Future<RecipeModel> load() async {
     // state = const AsyncLoading();
     // state = AsyncData([]);
-    final cuisine = ref.watch(cuisineProvider);
-    final sort = ref.watch(sortProvider);
-    final intolerance = ref.watch(intoleranceProvider);
+    final filter = ref.watch(recipeFilterProvider);
 
     final response = await client.get(Uri.parse(
-        "https://api.spoonacular.com/recipes/complexSearch?apiKey=394725e0efc640c6ba76d5bc3ef5c36a&query=pasta&sort=$sort&cuisine=$cuisine&intolerances=$intolerance"));
+        "https://api.spoonacular.com/recipes/complexSearch?apiKey=394725e0efc640c6ba76d5bc3ef5c36a&query=pasta${filter?.query}"));
     // print(response);
     try {
       if (response.statusCode == 200) {

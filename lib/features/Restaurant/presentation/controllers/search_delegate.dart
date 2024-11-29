@@ -5,7 +5,8 @@ import 'package:newproject/utils/exporter.dart';
 class CustomSearchDelegate extends SearchDelegate<String> {
   late final restaurantSearchProvider = FutureProvider((ref) async {
     final client = await ref.getDebouncedHttpClient();
-    return RestaurantRepository().load(keyword: query, client: client);
+    return RestaurantRepository(localClient: client)
+        .fetchRestaurant(query: query);
   });
   List<String> suggestions = [
     'a',

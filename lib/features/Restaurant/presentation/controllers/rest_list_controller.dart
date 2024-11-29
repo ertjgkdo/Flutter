@@ -13,13 +13,14 @@ class RestaurantController extends AsyncNotifier<RestaurantModel> {
 
   Future<RestaurantModel> loadData() async {
     return RestaurantRepository()
-        .load(client: await ref.getDebouncedHttpClient());
+        .fetch(client: await ref.getDebouncedHttpClient());
   }
 
   Future<void> searchRestaurants(String keyword) async {
     state = const AsyncLoading();
     try {
-      final result = await RestaurantRepository().load(keyword: keyword);
+      final result =
+          await RestaurantRepository().fetchRestaurant(query: keyword);
 
       state = AsyncData(result);
     } catch (e) {

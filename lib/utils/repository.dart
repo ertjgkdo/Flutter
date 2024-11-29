@@ -13,7 +13,7 @@ abstract class Repository<T> {
   T fromJson(Map<String, dynamic> map);
 
   Future<T> fetch({Client? client, String? path, String? queries}) async {
-    final response = await (client ?? localClient)!.get(
+    final response = await ((client ?? localClient) ?? Client()).get(
         Uri.parse(
             '$baseUrl$endpoint${path == null ? "" : "/$path"}${queries == null ? "" : "?$queries"}'),
         headers: {'x-api-key': apiKey, 'Content-Type': 'application/json'});
