@@ -25,25 +25,25 @@ class RestaurantList extends ConsumerWidget {
             Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                width: 30,
-                height: 30,
-                margin: const EdgeInsets.only(left: 5, top: 10),
-                padding: const EdgeInsets.only(left: 8),
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Color.fromARGB(255, 59, 66, 83)),
-                child: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.white70,
-                  size: 18,
-                ),
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //   },
+            //   child: Container(
+            //     width: 30,
+            //     height: 30,
+            //     margin: const EdgeInsets.only(left: 5, top: 10),
+            //     padding: const EdgeInsets.only(left: 8),
+            //     decoration: const BoxDecoration(
+            //         borderRadius: BorderRadius.all(Radius.circular(10)),
+            //         color: Color.fromARGB(255, 59, 66, 83)),
+            //     child: const Icon(
+            //       Icons.arrow_back_ios,
+            //       color: Colors.white70,
+            //       size: 18,
+            //     ),
+            //   ),
+            // ),
             Container(
               height: 40,
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),

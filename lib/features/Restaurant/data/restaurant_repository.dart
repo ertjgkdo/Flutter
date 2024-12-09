@@ -41,4 +41,10 @@ class RestaurantRepository extends Repository<RestaurantModel> {
         path: "restaurants/search",
         queries: "query=$query&lat=37.78129959&lng=-122.38869477");
   }
+
+  @override
+  List<RestaurantModel> listFromRawJson(String json) {
+    // TODO: implement listFromRawJson
+    throw UnimplementedError();
+  }
 }

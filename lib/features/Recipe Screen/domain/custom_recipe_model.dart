@@ -1,7 +1,13 @@
 import 'dart:convert';
 
+List<CustomFood> customFoodFromJson(String str) =>
+    List<CustomFood>.from(json.decode(str).map((x) => CustomFood.fromJson(x)));
+
+String customFoodToJson(List<CustomFood> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class CustomFood {
-  final int? id;
+  final String? id;
   final String? title;
   final int? servings;
   final String? customFoodBoxId;
@@ -26,7 +32,7 @@ class CustomFood {
   });
 
   CustomFood copyWith({
-    int? id,
+    String? id,
     String? title,
     int? servings,
     String? customFoodBoxId,
@@ -74,7 +80,7 @@ class CustomFood {
         "id": id,
         "title": title,
         "servings": servings,
-        "customFoodBoxId": customFoodBoxId,
+        "customFoodBoxId": 'test',
         "nutrition": nutrition?.toJson(),
         "meta": meta?.toJson(),
         "imageUrl": imageUrl,
@@ -85,12 +91,12 @@ class CustomFood {
 }
 
 class Meta {
-  final List<String>? diets;
-  final List<String>? intolerances;
+  final List<String> diets;
+  final List<String> intolerances;
 
   Meta({
-    this.diets,
-    this.intolerances,
+    this.diets = const [],
+    this.intolerances = const [],
   });
 
   Meta copyWith({
@@ -116,10 +122,11 @@ class Meta {
       );
 
   Map<String, dynamic> toJson() => {
-        "diets": diets == null ? [] : List<dynamic>.from(diets!.map((x) => x)),
+        "diets": diets == null ? [] : List<dynamic>.from(diets.map((x) => x)),
+        // ignore: unnecessary_null_comparison
         "intolerances": intolerances == null
             ? []
-            : List<dynamic>.from(intolerances!.map((x) => x)),
+            : List<dynamic>.from(intolerances.map((x) => x)),
       };
 }
 

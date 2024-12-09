@@ -115,16 +115,18 @@ class RecipeList extends ConsumerWidget {
                       color: Color.fromARGB(255, 113, 110, 110),
                     ),
                   ])),
-          recipeProvider.when(
-              data: (recipes) {
-                return mainBody(recipes, filterController, loading: false);
-              },
-              error: (error, stackTrace) => Container(
-                    child: Text(error.toString()),
-                  ),
-              loading: () => AbsorbPointer(
-                  child: mainBody(RecipeModel(), filterController,
-                      loading: true))),
+          Expanded(
+            child: recipeProvider.when(
+                data: (recipes) {
+                  return mainBody(recipes, filterController, loading: false);
+                },
+                error: (error, stackTrace) => Container(
+                      child: Text(error.toString()),
+                    ),
+                loading: () => AbsorbPointer(
+                    child: mainBody(RecipeModel(), filterController,
+                        loading: true))),
+          ),
         ],
       ),
     );

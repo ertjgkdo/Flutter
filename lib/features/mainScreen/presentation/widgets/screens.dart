@@ -11,6 +11,8 @@ import 'package:newproject/features/ProfileScreen/domain/posts_model.dart';
 import 'package:newproject/features/ProfileScreen/domain/users_model.dart';
 import 'package:newproject/features/ProfileScreen/presentation/widgets/profile.dart';
 import 'package:newproject/features/Recipe%20Screen/domain/recipe_model.dart';
+import 'package:newproject/features/Recipe%20Screen/presentation/widgets/custom_recipe/custom_list.dart';
+import 'package:newproject/features/Recipe%20Screen/presentation/widgets/custom_recipe/custom_recipe_form.dart';
 import 'package:newproject/features/Recipe%20Screen/presentation/widgets/recipe_detail.dart';
 import 'package:newproject/features/Recipe%20Screen/presentation/widgets/recipe_list.dart';
 import 'package:newproject/features/Restaurant/presentation/widgets/restaurant_list.dart';
@@ -263,6 +265,12 @@ class Screens extends StatelessWidget {
                 icon: Icons.add_box,
                 number: 3,
                 widget: const RestaurantList()),
+            buildItem(context,
+                title: "Custom recipe form",
+                subtitle: "Searching for restaurants ",
+                icon: Icons.add_box,
+                number: 3,
+                widget: CustomList()),
           ],
         ),
       ),
